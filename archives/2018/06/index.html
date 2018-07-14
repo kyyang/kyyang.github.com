@@ -384,43 +384,6 @@
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/posts/1685831840/" itemprop="url">
-              
-                <span itemprop="name">k8s v1.8.13 拉取私有镜像仓库镜像失败问题处理笔记</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-06-22T23:06:00+08:00"
-              content="2018-06-22" >
-          06-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
             <a class="post-title-link" href="/posts/1685831839/" itemprop="url">
               
                 <span itemprop="name">OutOfMemoryError系列</span>
@@ -461,6 +424,43 @@
             <a class="post-title-link" href="/posts/4238961614/" itemprop="url">
               
                 <span itemprop="name">GC垃圾回收</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2018-06-22T23:06:00+08:00"
+              content="2018-06-22" >
+          06-22
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+
+      
+
+        
+        
+        
+
+        
+        
+
+        
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/posts/1685831840/" itemprop="url">
+              
+                <span itemprop="name">k8s v1.8.13 拉取私有镜像仓库镜像失败问题处理笔记</span>
               
             </a>
         
@@ -970,6 +970,14 @@
         guest_info:guest,
         pageSize:'10' || 10,
     });
+
+    //新增以下代码即可，可以移除.info下所有子节点。
+    var infoEle = document.querySelector('#comments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+      infoEle.childNodes.forEach(function(item) {
+        item.parentNode.removeChild(item);
+      });
+    }
   </script>
 
 
@@ -1312,15 +1320,12 @@
 
   
 
-  // 代码块复制功能 
+  
   <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
   <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
 
-// <script type="text/javascript" src="/lib/clipboard/clipboard.js"></script>
-// <script type="text/javascript" src="/js/src/custom.js"></script>
 
 
-//highlight.js 
 <script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 <script type="text/javascript">
   $(function() {

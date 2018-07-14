@@ -70,7 +70,7 @@
 
 
 
-  <meta name="keywords" content="java,gc算法,gc调优," />
+  <meta name="keywords" content="gc算法,gc调优,java," />
 
 
 
@@ -82,7 +82,7 @@
 
 
 <meta name="description" content="垃圾收集简介 - GC参考手册  Java中的垃圾收集 - GC参考手册  GC 算法(基础篇) - GC参考手册  GC 算法(实现篇) - GC参考手册  GC 调优(基础篇) - GC参考手册  GC 调优(工具篇) - GC参考手册  GC 调优(实战篇) - GC参考手册">
-<meta name="keywords" content="java,gc算法,gc调优">
+<meta name="keywords" content="gc算法,gc调优,java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="GC垃圾回收">
 <meta property="og:url" content="https://kyyang.io/posts/4238961614/index.html">
@@ -432,11 +432,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/java/" rel="tag"># java</a>
-          
             <a href="/tags/gc算法/" rel="tag"># gc算法</a>
           
             <a href="/tags/gc调优/" rel="tag"># gc调优</a>
+          
+            <a href="/tags/java/" rel="tag"># java</a>
           
         </div>
       
@@ -449,8 +449,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/4216588689/" rel="next" title="ELK优化笔记">
-                <i class="fa fa-chevron-left"></i> ELK优化笔记
+              <a href="/posts/1685831840/" rel="next" title="k8s v1.8.13 拉取私有镜像仓库镜像失败问题处理笔记">
+                <i class="fa fa-chevron-left"></i> k8s v1.8.13 拉取私有镜像仓库镜像失败问题处理笔记
               </a>
             
           </div>
@@ -789,6 +789,14 @@
         guest_info:guest,
         pageSize:'10' || 10,
     });
+
+    //新增以下代码即可，可以移除.info下所有子节点。
+    var infoEle = document.querySelector('#comments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+      infoEle.childNodes.forEach(function(item) {
+        item.parentNode.removeChild(item);
+      });
+    }
   </script>
 
 
@@ -1131,15 +1139,12 @@
 
   
 
-  // 代码块复制功能 
+  
   <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
   <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
 
-// <script type="text/javascript" src="/lib/clipboard/clipboard.js"></script>
-// <script type="text/javascript" src="/js/src/custom.js"></script>
 
 
-//highlight.js 
 <script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 <script type="text/javascript">
   $(function() {

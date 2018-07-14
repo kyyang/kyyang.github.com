@@ -451,8 +451,8 @@ kubectl get serviceaccounts  default -o yaml
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/1685831839/" rel="next" title="OutOfMemoryError系列">
-                <i class="fa fa-chevron-left"></i> OutOfMemoryError系列
+              <a href="/posts/4216588689/" rel="next" title="ELK优化笔记">
+                <i class="fa fa-chevron-left"></i> ELK优化笔记
               </a>
             
           </div>
@@ -461,8 +461,8 @@ kubectl get serviceaccounts  default -o yaml
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/posts/1711085942/" rel="prev" title="搭建kubernetes高可用集群-01准备环境">
-                搭建kubernetes高可用集群-01准备环境 <i class="fa fa-chevron-right"></i>
+              <a href="/posts/4238961614/" rel="prev" title="GC垃圾回收">
+                GC垃圾回收 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -816,6 +816,14 @@ kubectl get serviceaccounts  default -o yaml
         guest_info:guest,
         pageSize:'10' || 10,
     });
+
+    //新增以下代码即可，可以移除.info下所有子节点。
+    var infoEle = document.querySelector('#comments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+      infoEle.childNodes.forEach(function(item) {
+        item.parentNode.removeChild(item);
+      });
+    }
   </script>
 
 
@@ -1158,15 +1166,12 @@ kubectl get serviceaccounts  default -o yaml
 
   
 
-  // 代码块复制功能 
+  
   <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
   <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
 
-// <script type="text/javascript" src="/lib/clipboard/clipboard.js"></script>
-// <script type="text/javascript" src="/js/src/custom.js"></script>
 
 
-//highlight.js 
 <script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 <script type="text/javascript">
   $(function() {

@@ -74,29 +74,6 @@
     </entry>
     
     <entry>
-      <title>k8s v1.8.13 拉取私有镜像仓库镜像失败问题处理笔记</title>
-      <link href="/posts/1685831840/"/>
-      <url>/posts/1685831840/</url>
-      <content type="html"><![CDATA[<h3 id="报错日志"><a href="#报错日志" class="headerlink" title="报错日志"></a>报错日志</h3><pre><code>Failed to pull image  &quot;image-url/web/nginx&quot;: rpc error : code = Unknown desc = error response form daemon: pull access denied for image-url/web/nginx , repository does not exist or may require &#39;docker login&#39;</code></pre><h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><pre><code>#创建secretkubectl create secret docker-registry SECRET-NAME --docker-server=registry.kyloverose.com  --docker-username=web --docker-password=you-password --docker-email=kyvicp@gmail.com#配置默认规则,将密钥设置到默认账号中kubectl patch serviceaccount default -p &#39;{&quot;imagePullSecrets&quot;: [{&quot;name&quot;: &quot;SECRET-NAME&quot;}]}#查看默认账号配置kubectl get serviceaccounts  default -o yaml</code></pre><blockquote><p>说明：</p><ul><li>secret名： SECRET-NAME</li><li>–docker-server 为docker login时的域名</li><li>–docker-username 是登录镜仓库的用户名</li><li>–docker-password 登录镜仓库的密码</li><li>–docker-email 邮箱账号</li></ul></blockquote>]]></content>
-      
-      <categories>
-          
-          <category> kubernetes </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> docker </tag>
-            
-            <tag> harbor </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    <entry>
       <title>OutOfMemoryError系列</title>
       <link href="/posts/1685831839/"/>
       <url>/posts/1685831839/</url>
@@ -111,9 +88,9 @@
       
         <tags>
             
-            <tag> 内存溢出 </tag>
-            
             <tag> java </tag>
+            
+            <tag> 内存溢出 </tag>
             
             <tag> OutOfMemoryError </tag>
             
@@ -136,11 +113,34 @@
       
         <tags>
             
-            <tag> java </tag>
-            
             <tag> gc算法 </tag>
             
             <tag> gc调优 </tag>
+            
+            <tag> java </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>k8s v1.8.13 拉取私有镜像仓库镜像失败问题处理笔记</title>
+      <link href="/posts/1685831840/"/>
+      <url>/posts/1685831840/</url>
+      <content type="html"><![CDATA[<h3 id="报错日志"><a href="#报错日志" class="headerlink" title="报错日志"></a>报错日志</h3><pre><code>Failed to pull image  &quot;image-url/web/nginx&quot;: rpc error : code = Unknown desc = error response form daemon: pull access denied for image-url/web/nginx , repository does not exist or may require &#39;docker login&#39;</code></pre><h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><pre><code>#创建secretkubectl create secret docker-registry SECRET-NAME --docker-server=registry.kyloverose.com  --docker-username=web --docker-password=you-password --docker-email=kyvicp@gmail.com#配置默认规则,将密钥设置到默认账号中kubectl patch serviceaccount default -p &#39;{&quot;imagePullSecrets&quot;: [{&quot;name&quot;: &quot;SECRET-NAME&quot;}]}#查看默认账号配置kubectl get serviceaccounts  default -o yaml</code></pre><blockquote><p>说明：</p><ul><li>secret名： SECRET-NAME</li><li>–docker-server 为docker login时的域名</li><li>–docker-username 是登录镜仓库的用户名</li><li>–docker-password 登录镜仓库的密码</li><li>–docker-email 邮箱账号</li></ul></blockquote>]]></content>
+      
+      <categories>
+          
+          <category> kubernetes </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> docker </tag>
+            
+            <tag> harbor </tag>
             
         </tags>
       

@@ -910,180 +910,6 @@ EOF
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://kyyang.io/posts/1685831840/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ky yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ky.yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/posts/1685831840/" itemprop="url">k8s v1.8.13 拉取私有镜像仓库镜像失败问题处理笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-22T23:06:00+08:00">
-                2018-06-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/kubernetes/" itemprop="url" rel="index">
-                    <span itemprop="name">kubernetes</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/posts/1685831840/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/posts/1685831840/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="报错日志"><a href="#报错日志" class="headerlink" title="报错日志"></a>报错日志</h3><pre><code>Failed to pull image  &quot;image-url/web/nginx&quot;: rpc error : code = Unknown desc = error response form daemon: pull access denied for image-url/web/nginx , repository does not exist or may require &#39;docker login&#39;
-</code></pre><h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><pre><code>#创建secret
-kubectl create secret docker-registry SECRET-NAME --docker-server=registry.kyloverose.com  --docker-username=web --docker-password=you-password --docker-email=kyvicp@gmail.com
-
-#配置默认规则,将密钥设置到默认账号中
-kubectl patch serviceaccount default -p &#39;{&quot;imagePullSecrets&quot;: [{&quot;name&quot;: &quot;SECRET-NAME&quot;}]}
-
-#查看默认账号配置
-kubectl get serviceaccounts  default -o yaml
-
-</code></pre><blockquote>
-<p>说明：</p>
-<ul>
-<li>secret名： SECRET-NAME</li>
-<li>–docker-server 为docker login时的域名</li>
-<li>–docker-username 是登录镜仓库的用户名</li>
-<li>–docker-password 登录镜仓库的密码</li>
-<li>–docker-email 邮箱账号</li>
-</ul>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-    <div>
-    
-    </div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://kyyang.io/posts/1685831839/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1375,6 +1201,180 @@ kubectl get serviceaccounts  default -o yaml
 <li><p><a href="https://blog.csdn.net/renfufei/article/details/61924893" target="_blank" rel="noopener">GC 调优(实战篇) - GC参考手册</a></p>
 </li>
 </ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+    <div>
+    
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kyyang.io/posts/1685831840/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ky yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ky.yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/posts/1685831840/" itemprop="url">k8s v1.8.13 拉取私有镜像仓库镜像失败问题处理笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-22T23:06:00+08:00">
+                2018-06-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/1685831840/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/posts/1685831840/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="报错日志"><a href="#报错日志" class="headerlink" title="报错日志"></a>报错日志</h3><pre><code>Failed to pull image  &quot;image-url/web/nginx&quot;: rpc error : code = Unknown desc = error response form daemon: pull access denied for image-url/web/nginx , repository does not exist or may require &#39;docker login&#39;
+</code></pre><h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><pre><code>#创建secret
+kubectl create secret docker-registry SECRET-NAME --docker-server=registry.kyloverose.com  --docker-username=web --docker-password=you-password --docker-email=kyvicp@gmail.com
+
+#配置默认规则,将密钥设置到默认账号中
+kubectl patch serviceaccount default -p &#39;{&quot;imagePullSecrets&quot;: [{&quot;name&quot;: &quot;SECRET-NAME&quot;}]}
+
+#查看默认账号配置
+kubectl get serviceaccounts  default -o yaml
+
+</code></pre><blockquote>
+<p>说明：</p>
+<ul>
+<li>secret名： SECRET-NAME</li>
+<li>–docker-server 为docker login时的域名</li>
+<li>–docker-username 是登录镜仓库的用户名</li>
+<li>–docker-password 登录镜仓库的密码</li>
+<li>–docker-email 邮箱账号</li>
+</ul>
+</blockquote>
 
           
         
@@ -2413,6 +2413,14 @@ blog/
         guest_info:guest,
         pageSize:'10' || 10,
     });
+
+    //新增以下代码即可，可以移除.info下所有子节点。
+    var infoEle = document.querySelector('#comments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+      infoEle.childNodes.forEach(function(item) {
+        item.parentNode.removeChild(item);
+      });
+    }
   </script>
 
 
@@ -2755,15 +2763,12 @@ blog/
 
   
 
-  // 代码块复制功能 
+  
   <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
   <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
 
-// <script type="text/javascript" src="/lib/clipboard/clipboard.js"></script>
-// <script type="text/javascript" src="/js/src/custom.js"></script>
 
 
-//highlight.js 
 <script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 <script type="text/javascript">
   $(function() {

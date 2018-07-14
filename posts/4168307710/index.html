@@ -850,6 +850,14 @@ containers-part-1.html" target="_blank" rel="noopener">来自Michael Crosby的Cr
         guest_info:guest,
         pageSize:'10' || 10,
     });
+
+    //新增以下代码即可，可以移除.info下所有子节点。
+    var infoEle = document.querySelector('#comments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0){
+      infoEle.childNodes.forEach(function(item) {
+        item.parentNode.removeChild(item);
+      });
+    }
   </script>
 
 
@@ -1192,15 +1200,12 @@ containers-part-1.html" target="_blank" rel="noopener">来自Michael Crosby的Cr
 
   
 
-  // 代码块复制功能 
+  
   <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
   <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
 
-// <script type="text/javascript" src="/lib/clipboard/clipboard.js"></script>
-// <script type="text/javascript" src="/js/src/custom.js"></script>
 
 
-//highlight.js 
 <script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 <script type="text/javascript">
   $(function() {
