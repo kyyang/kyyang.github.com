@@ -7,6 +7,8 @@
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
+  <link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+  
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
@@ -824,7 +826,7 @@
         notify: false,
         appId: 'iCLFy0AmWxS1qbsdYCjbUY8K-gzGzoHsz',
         appKey: 'k949iipHn4oJWiXoBqHuiHaI',
-        placeholder: '有什么想要对我说吗？',
+        placeholder: '如有更好的建议或问题请留言。',
         avatar:'mm',
         guest_info:guest,
         pageSize:'10' || 10,
@@ -1171,7 +1173,32 @@
 
   
 
-  <script type="text/javascript" src="/lib/clipboard/clipboard.js"></script>
-<script type="text/javascript" src="/js/src/custom.js"></script>
+  // 代码块复制功能 
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+
+// <script type="text/javascript" src="/lib/clipboard/clipboard.js"></script>
+// <script type="text/javascript" src="/js/src/custom.js"></script>
+
+
+//highlight.js 
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script type="text/javascript">
+  $(function() {
+      hljs.initHighlighting();
+      $('pre code').each(function() {
+        var lines = $(this).text().split('\n').length - 1;
+        var $numbering = $('<ul/>').addClass('pre-numbering');
+        $(this)
+          .addClass('has-numbering')
+          .parent()
+          .append($numbering);
+        for (i = 1; i <= lines; i++) {
+          $numbering.append($('<li/>'));
+        }
+      });
+    });
+</script>
+
 </body>
 </html>

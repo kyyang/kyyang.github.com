@@ -7,6 +7,8 @@
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
+  <link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+  
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
@@ -79,18 +81,18 @@
 
 
 
-<meta name="description" content="创建TLS证书和密钥安装CFSSL1234567891011wget https://pkg.cfssl.org/R1.2/cfssl_linux-amd64chmod +x cfssl_linux-amd64mv cfssl_linux-amd64 /usr/local/bin/cfsslwget https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64c">
+<meta name="description" content="创建TLS证书和密钥安装CFSSLwget https://pkg.cfssl.org/R1.2/cfssl_linux-amd64 chmod +x cfssl_linux-amd64 mv cfssl_linux-amd64 /usr/local/bin/cfssl  wget https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64 chmod +x">
 <meta name="keywords" content="docker,k8s,安装k8s">
 <meta property="og:type" content="article">
 <meta property="og:title" content="搭建kubernetes高可用集群-02创建TLS证书和密钥">
 <meta property="og:url" content="https://kyyang.io/posts/3175168585/index.html">
 <meta property="og:site_name" content="ky.yang">
-<meta property="og:description" content="创建TLS证书和密钥安装CFSSL1234567891011wget https://pkg.cfssl.org/R1.2/cfssl_linux-amd64chmod +x cfssl_linux-amd64mv cfssl_linux-amd64 /usr/local/bin/cfsslwget https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64c">
+<meta property="og:description" content="创建TLS证书和密钥安装CFSSLwget https://pkg.cfssl.org/R1.2/cfssl_linux-amd64 chmod +x cfssl_linux-amd64 mv cfssl_linux-amd64 /usr/local/bin/cfssl  wget https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64 chmod +x">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-14T06:50:27.963Z">
+<meta property="og:updated_time" content="2018-07-14T09:02:31.408Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="搭建kubernetes高可用集群-02创建TLS证书和密钥">
-<meta name="twitter:description" content="创建TLS证书和密钥安装CFSSL1234567891011wget https://pkg.cfssl.org/R1.2/cfssl_linux-amd64chmod +x cfssl_linux-amd64mv cfssl_linux-amd64 /usr/local/bin/cfsslwget https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64c">
+<meta name="twitter:description" content="创建TLS证书和密钥安装CFSSLwget https://pkg.cfssl.org/R1.2/cfssl_linux-amd64 chmod +x cfssl_linux-amd64 mv cfssl_linux-amd64 /usr/local/bin/cfssl  wget https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64 chmod +x">
 
 
 
@@ -386,41 +388,179 @@
       
 
       
-        <h2 id="创建TLS证书和密钥"><a href="#创建TLS证书和密钥" class="headerlink" title="创建TLS证书和密钥"></a>创建TLS证书和密钥</h2><h3 id="安装CFSSL"><a href="#安装CFSSL" class="headerlink" title="安装CFSSL"></a>安装CFSSL</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">wget https://pkg.cfssl.org/R1.2/cfssl_linux-amd64</span><br><span class="line">chmod +x cfssl_linux-amd64</span><br><span class="line">mv cfssl_linux-amd64 /usr/local/bin/cfssl</span><br><span class="line"></span><br><span class="line">wget https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64</span><br><span class="line">chmod +x cfssljson_linux-amd64</span><br><span class="line">mv cfssljson_linux-amd64 /usr/local/bin/cfssljson</span><br><span class="line"></span><br><span class="line">wget https://pkg.cfssl.org/R1.2/cfssl-certinfo_linux-amd64</span><br><span class="line">chmod +x cfssl-certinfo_linux-amd64</span><br><span class="line">mv cfssl-certinfo_linux-amd64 /usr/local/bin/cfssl-certinfo</span><br></pre></td></tr></table></figure>
-<h3 id="创建CA"><a href="#创建CA" class="headerlink" title="创建CA"></a>创建CA</h3><h4 id="创建CA配置文件"><a href="#创建CA配置文件" class="headerlink" title="创建CA配置文件"></a>创建CA配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">mkdir /root/ssl</span><br><span class="line">cd /root/ssl</span><br><span class="line">cfssl print-defaults config &gt; config.json</span><br><span class="line">cfssl print-defaults csr &gt; csr.json</span><br><span class="line"></span><br><span class="line"># 根据config.json文件的格式创建如下的ca-config.json文件</span><br><span class="line"># 过期时间设置成了 87600h</span><br><span class="line">cat &gt; ca-config.json &lt;&lt;EOF</span><br><span class="line">&#123;</span><br><span class="line">  &quot;signing&quot;: &#123;</span><br><span class="line">    &quot;default&quot;: &#123;</span><br><span class="line">      &quot;expiry&quot;: &quot;87600h&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;profiles&quot;: &#123;</span><br><span class="line">      &quot;kubernetes&quot;: &#123;</span><br><span class="line">        &quot;usages&quot;: [</span><br><span class="line">            &quot;signing&quot;,</span><br><span class="line">            &quot;key encipherment&quot;,</span><br><span class="line">            &quot;server auth&quot;,</span><br><span class="line">            &quot;client auth&quot;</span><br><span class="line">        ],</span><br><span class="line">        &quot;expiry&quot;: &quot;87600h&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<h4 id="创建CA证书签名请求"><a href="#创建CA证书签名请求" class="headerlink" title="创建CA证书签名请求"></a>创建CA证书签名请求</h4><p>创建 ca-csr.json 文件，内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; ca-csr.json &lt;&lt; EOF</span><br><span class="line">&#123;</span><br><span class="line">  &quot;CN&quot;: &quot;kubernetes&quot;,</span><br><span class="line">  &quot;key&quot;: &#123;</span><br><span class="line">    &quot;algo&quot;: &quot;rsa&quot;,</span><br><span class="line">    &quot;size&quot;: 2048</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;names&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;C&quot;: &quot;CN&quot;,</span><br><span class="line">      &quot;ST&quot;: &quot;Shenzhen&quot;,</span><br><span class="line">      &quot;L&quot;: &quot;Shenzhen&quot;,</span><br><span class="line">      &quot;O&quot;: &quot;k8s&quot;,</span><br><span class="line">      &quot;OU&quot;: &quot;System&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">    &quot;ca&quot;: &#123;</span><br><span class="line">       &quot;expiry&quot;: &quot;87600h&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure></p>
-<h4 id="生成CA证书和私钥"><a href="#生成CA证书和私钥" class="headerlink" title="生成CA证书和私钥"></a>生成CA证书和私钥</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cfssl gencert -initca ca-csr.json | cfssljson -bare ca</span><br><span class="line">ls ca*</span><br><span class="line">ca-config.json  ca.csr  ca-csr.json  ca-key.pem  ca.pem</span><br></pre></td></tr></table></figure>
-<h3 id="创建kubernetes证书"><a href="#创建kubernetes证书" class="headerlink" title="创建kubernetes证书"></a>创建kubernetes证书</h3><ul>
-<li><p>创建kubernetes证书签名请求文件<br>创建 kubernetes 证书签名请求文件 kubernetes-csr.json</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; kubernetes-csr.json &lt;&lt; EOF</span><br><span class="line">&#123;</span><br><span class="line">    &quot;CN&quot;: &quot;kubernetes&quot;,</span><br><span class="line">    &quot;hosts&quot;: [</span><br><span class="line">      &quot;127.0.0.1&quot;,</span><br><span class="line">      &quot;192.168.255.194&quot;,</span><br><span class="line">      &quot;192.168.255.195&quot;,</span><br><span class="line">      &quot;192.168.255.196&quot;,</span><br><span class="line">      &quot;192.168.255.190&quot;,</span><br><span class="line">      &quot;192.168.255.191&quot;,</span><br><span class="line">      &quot;192.168.255.192&quot;,</span><br><span class="line">      &quot;192.168.255.200&quot;,</span><br><span class="line">      &quot;192.168.255.201&quot;,</span><br><span class="line">      &quot;192.168.255.202&quot;,</span><br><span class="line">      &quot;192.168.255.199&quot;,</span><br><span class="line">      &quot;192.168.255.198&quot;,</span><br><span class="line">      &quot;192.168.255.197&quot;,</span><br><span class="line">      &quot;10.254.0.1&quot;,</span><br><span class="line">      &quot;kubernetes&quot;,</span><br><span class="line">      &quot;kubernetes.default&quot;,</span><br><span class="line">      &quot;kubernetes.default.svc&quot;,</span><br><span class="line">      &quot;kubernetes.default.svc.cluster&quot;,</span><br><span class="line">      &quot;kubernetes.default.svc.cluster.local&quot;</span><br><span class="line">    ],</span><br><span class="line">    &quot;key&quot;: &#123;</span><br><span class="line">        &quot;algo&quot;: &quot;rsa&quot;,</span><br><span class="line">        &quot;size&quot;: 2048</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;names&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;C&quot;: &quot;CN&quot;,</span><br><span class="line">            &quot;ST&quot;: &quot;Shenzhen&quot;,</span><br><span class="line">            &quot;L&quot;: &quot;Shenzhen&quot;,</span><br><span class="line">            &quot;O&quot;: &quot;k8s&quot;,</span><br><span class="line">            &quot;OU&quot;: &quot;System&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>生成 kubernetes 证书和私钥</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes kubernetes-csr.json | cfssljson -bare kubernetes</span><br><span class="line"></span><br><span class="line">ls kubernetes*</span><br></pre></td></tr></table></figure>
-</li>
+        <h2 id="创建TLS证书和密钥"><a href="#创建TLS证书和密钥" class="headerlink" title="创建TLS证书和密钥"></a>创建TLS证书和密钥</h2><h3 id="安装CFSSL"><a href="#安装CFSSL" class="headerlink" title="安装CFSSL"></a>安装CFSSL</h3><pre><code>wget https://pkg.cfssl.org/R1.2/cfssl_linux-amd64
+chmod +x cfssl_linux-amd64
+mv cfssl_linux-amd64 /usr/local/bin/cfssl
+
+wget https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64
+chmod +x cfssljson_linux-amd64
+mv cfssljson_linux-amd64 /usr/local/bin/cfssljson
+
+wget https://pkg.cfssl.org/R1.2/cfssl-certinfo_linux-amd64
+chmod +x cfssl-certinfo_linux-amd64
+mv cfssl-certinfo_linux-amd64 /usr/local/bin/cfssl-certinfo
+</code></pre><h3 id="创建CA"><a href="#创建CA" class="headerlink" title="创建CA"></a>创建CA</h3><h4 id="创建CA配置文件"><a href="#创建CA配置文件" class="headerlink" title="创建CA配置文件"></a>创建CA配置文件</h4><pre><code>mkdir /root/ssl
+cd /root/ssl
+cfssl print-defaults config &gt; config.json
+cfssl print-defaults csr &gt; csr.json
+
+# 根据config.json文件的格式创建如下的ca-config.json文件
+# 过期时间设置成了 87600h
+cat &gt; ca-config.json &lt;&lt;EOF
+{
+  &quot;signing&quot;: {
+    &quot;default&quot;: {
+      &quot;expiry&quot;: &quot;87600h&quot;
+    },
+    &quot;profiles&quot;: {
+      &quot;kubernetes&quot;: {
+        &quot;usages&quot;: [
+            &quot;signing&quot;,
+            &quot;key encipherment&quot;,
+            &quot;server auth&quot;,
+            &quot;client auth&quot;
+        ],
+        &quot;expiry&quot;: &quot;87600h&quot;
+      }
+    }
+  }
+}
+EOF
+</code></pre><a id="more"></a>
+<h4 id="创建CA证书签名请求"><a href="#创建CA证书签名请求" class="headerlink" title="创建CA证书签名请求"></a>创建CA证书签名请求</h4><p>创建 ca-csr.json 文件，内容如下：</p>
+<pre><code>cat &gt; ca-csr.json &lt;&lt; EOF
+{
+  &quot;CN&quot;: &quot;kubernetes&quot;,
+  &quot;key&quot;: {
+    &quot;algo&quot;: &quot;rsa&quot;,
+    &quot;size&quot;: 2048
+  },
+  &quot;names&quot;: [
+    {
+      &quot;C&quot;: &quot;CN&quot;,
+      &quot;ST&quot;: &quot;Shenzhen&quot;,
+      &quot;L&quot;: &quot;Shenzhen&quot;,
+      &quot;O&quot;: &quot;k8s&quot;,
+      &quot;OU&quot;: &quot;System&quot;
+    }
+  ],
+    &quot;ca&quot;: {
+       &quot;expiry&quot;: &quot;87600h&quot;
+    }
+}
+EOF
+</code></pre><h4 id="生成CA证书和私钥"><a href="#生成CA证书和私钥" class="headerlink" title="生成CA证书和私钥"></a>生成CA证书和私钥</h4><pre><code>cfssl gencert -initca ca-csr.json | cfssljson -bare ca
+ls ca*
+ca-config.json  ca.csr  ca-csr.json  ca-key.pem  ca.pem
+</code></pre><h3 id="创建kubernetes证书"><a href="#创建kubernetes证书" class="headerlink" title="创建kubernetes证书"></a>创建kubernetes证书</h3><ul>
+<li>创建kubernetes证书签名请求文件<br>创建 kubernetes 证书签名请求文件 kubernetes-csr.json</li>
 </ul>
-<h3 id="创建Admin证书"><a href="#创建Admin证书" class="headerlink" title="创建Admin证书"></a>创建Admin证书</h3><ul>
-<li><p>创建Admin证书签名请求文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; admin-csr.json &lt;&lt; EOF</span><br><span class="line">&#123;</span><br><span class="line">  &quot;CN&quot;: &quot;admin&quot;,</span><br><span class="line">  &quot;hosts&quot;: [],</span><br><span class="line">  &quot;key&quot;: &#123;</span><br><span class="line">    &quot;algo&quot;: &quot;rsa&quot;,</span><br><span class="line">    &quot;size&quot;: 2048</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;names&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;C&quot;: &quot;CN&quot;,</span><br><span class="line">      &quot;ST&quot;: &quot;Shenzhen&quot;,</span><br><span class="line">      &quot;L&quot;: &quot;Shenzhen&quot;,</span><br><span class="line">      &quot;O&quot;: &quot;system:masters&quot;,</span><br><span class="line">      &quot;OU&quot;: &quot;System&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>生成admin证书和私钥</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes admin-csr.json | cfssljson -bare admin</span><br><span class="line">ls admin*</span><br></pre></td></tr></table></figure>
-</li>
+<pre><code>cat &gt; kubernetes-csr.json &lt;&lt; EOF
+{
+    &quot;CN&quot;: &quot;kubernetes&quot;,
+    &quot;hosts&quot;: [
+      &quot;127.0.0.1&quot;,
+      &quot;192.168.255.194&quot;,
+      &quot;192.168.255.195&quot;,
+      &quot;192.168.255.196&quot;,
+      &quot;192.168.255.190&quot;,
+      &quot;192.168.255.191&quot;,
+      &quot;192.168.255.192&quot;,
+      &quot;192.168.255.200&quot;,
+      &quot;192.168.255.201&quot;,
+      &quot;192.168.255.202&quot;,
+      &quot;192.168.255.199&quot;,
+      &quot;192.168.255.198&quot;,
+      &quot;192.168.255.197&quot;,
+      &quot;10.254.0.1&quot;,
+      &quot;kubernetes&quot;,
+      &quot;kubernetes.default&quot;,
+      &quot;kubernetes.default.svc&quot;,
+      &quot;kubernetes.default.svc.cluster&quot;,
+      &quot;kubernetes.default.svc.cluster.local&quot;
+    ],
+    &quot;key&quot;: {
+        &quot;algo&quot;: &quot;rsa&quot;,
+        &quot;size&quot;: 2048
+    },
+    &quot;names&quot;: [
+        {
+            &quot;C&quot;: &quot;CN&quot;,
+            &quot;ST&quot;: &quot;Shenzhen&quot;,
+            &quot;L&quot;: &quot;Shenzhen&quot;,
+            &quot;O&quot;: &quot;k8s&quot;,
+            &quot;OU&quot;: &quot;System&quot;
+        }
+    ]
+}
+EOF
+</code></pre><ul>
+<li>生成 kubernetes 证书和私钥</li>
 </ul>
-<h3 id="创建kube-proxy证书"><a href="#创建kube-proxy证书" class="headerlink" title="创建kube-proxy证书"></a>创建kube-proxy证书</h3><ul>
-<li><p>创建kube-proxy证书签名请求文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; kube-proxy-csr.json &lt;&lt; EOF</span><br><span class="line">&#123;</span><br><span class="line">  &quot;CN&quot;: &quot;system:kube-proxy&quot;,</span><br><span class="line">  &quot;hosts&quot;: [],</span><br><span class="line">  &quot;key&quot;: &#123;</span><br><span class="line">    &quot;algo&quot;: &quot;rsa&quot;,</span><br><span class="line">    &quot;size&quot;: 2048</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;names&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;C&quot;: &quot;CN&quot;,</span><br><span class="line">      &quot;ST&quot;: &quot;Shenzhen&quot;,</span><br><span class="line">      &quot;L&quot;: &quot;Shenzhen&quot;,</span><br><span class="line">      &quot;O&quot;: &quot;k8s&quot;,</span><br><span class="line">      &quot;OU&quot;: &quot;System&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>生成kube-proxy客户端证书和私钥</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes  kube-proxy-csr.json | cfssljson -bare kube-proxy</span><br></pre></td></tr></table></figure>
-</li>
+<pre><code>cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes kubernetes-csr.json | cfssljson -bare kubernetes
+
+ls kubernetes*
+</code></pre><h3 id="创建Admin证书"><a href="#创建Admin证书" class="headerlink" title="创建Admin证书"></a>创建Admin证书</h3><ul>
+<li>创建Admin证书签名请求文件</li>
 </ul>
-<h3 id="校验证书"><a href="#校验证书" class="headerlink" title="校验证书"></a>校验证书</h3><ul>
+<pre><code>cat &gt; admin-csr.json &lt;&lt; EOF
+{
+  &quot;CN&quot;: &quot;admin&quot;,
+  &quot;hosts&quot;: [],
+  &quot;key&quot;: {
+    &quot;algo&quot;: &quot;rsa&quot;,
+    &quot;size&quot;: 2048
+  },
+  &quot;names&quot;: [
+    {
+      &quot;C&quot;: &quot;CN&quot;,
+      &quot;ST&quot;: &quot;Shenzhen&quot;,
+      &quot;L&quot;: &quot;Shenzhen&quot;,
+      &quot;O&quot;: &quot;system:masters&quot;,
+      &quot;OU&quot;: &quot;System&quot;
+    }
+  ]
+}
+EOF
+</code></pre><ul>
+<li>生成admin证书和私钥</li>
+</ul>
+<pre><code>cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes admin-csr.json | cfssljson -bare admin
+ls admin*
+</code></pre><h3 id="创建kube-proxy证书"><a href="#创建kube-proxy证书" class="headerlink" title="创建kube-proxy证书"></a>创建kube-proxy证书</h3><ul>
+<li>创建kube-proxy证书签名请求文件</li>
+</ul>
+<pre><code>cat &gt; kube-proxy-csr.json &lt;&lt; EOF
+{
+  &quot;CN&quot;: &quot;system:kube-proxy&quot;,
+  &quot;hosts&quot;: [],
+  &quot;key&quot;: {
+    &quot;algo&quot;: &quot;rsa&quot;,
+    &quot;size&quot;: 2048
+  },
+  &quot;names&quot;: [
+    {
+      &quot;C&quot;: &quot;CN&quot;,
+      &quot;ST&quot;: &quot;Shenzhen&quot;,
+      &quot;L&quot;: &quot;Shenzhen&quot;,
+      &quot;O&quot;: &quot;k8s&quot;,
+      &quot;OU&quot;: &quot;System&quot;
+    }
+  ]
+}
+EOF
+</code></pre><ul>
+<li>生成kube-proxy客户端证书和私钥</li>
+</ul>
+<pre><code>cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes  kube-proxy-csr.json | cfssljson -bare kube-proxy
+</code></pre><h3 id="校验证书"><a href="#校验证书" class="headerlink" title="校验证书"></a>校验证书</h3><ul>
 <li>使用opsnssl命令验证: <code>openssl x509  -noout -text -in  kubernetes.pem</code></li>
 <li>使用cfssl-certinfo命令: <code>cfssl-certinfo -cert kubernetes.pem</code></li>
 </ul>
-<h2 id="分发证书"><a href="#分发证书" class="headerlink" title="分发证书"></a>分发证书</h2><p>到现在我们已经生成的证书文件有：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@master script]# ls /etc/kubernetes/ssl/</span><br><span class="line">admin-key.pem  admin.pem  ca-key.pem  ca.pem  kube-proxy-key.pem  kube-proxy.pem  kubernetes-key.pem  kubernetes.pem</span><br></pre></td></tr></table></figure></p>
-<p>接下来将生成的证书和秘钥文件（后缀名为.pem）拷贝到对应机器的 /etc/kubernetes/ssl 目录下备用；<br>各组件所需要证书文件如下：</p>
+<h2 id="分发证书"><a href="#分发证书" class="headerlink" title="分发证书"></a>分发证书</h2><p>到现在我们已经生成的证书文件有：</p>
+<pre><code>[root@master script]# ls /etc/kubernetes/ssl/
+admin-key.pem  admin.pem  ca-key.pem  ca.pem  kube-proxy-key.pem  kube-proxy.pem  kubernetes-key.pem  kubernetes.pem
+</code></pre><p>接下来将生成的证书和秘钥文件（后缀名为.pem）拷贝到对应机器的 /etc/kubernetes/ssl 目录下备用；<br>各组件所需要证书文件如下：</p>
 <table>
 <thead>
 <tr>
@@ -450,8 +590,10 @@
 <blockquote>
 <p>etcd 节点上共用kubernetes的证书文件</p>
 </blockquote>
-<p>复制对应证书到各组件节点上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /etc/kubernetes/ssl</span><br><span class="line">cp *.pem /etc/kubernetes/ssl</span><br></pre></td></tr></table></figure></p>
-<p>参考：<a href="https://jimmysong.io/kubernetes-handbook/practice/create-tls-and-secret-key.html" target="_blank" rel="noopener"> jimmysong博客 </a></p>
+<p>复制对应证书到各组件节点上</p>
+<pre><code>mkdir -p /etc/kubernetes/ssl
+cp *.pem /etc/kubernetes/ssl
+</code></pre><p>参考：<a href="https://jimmysong.io/kubernetes-handbook/practice/create-tls-and-secret-key.html" target="_blank" rel="noopener"> jimmysong博客 </a></p>
 
       
     </div>
@@ -857,7 +999,7 @@
         notify: false,
         appId: 'iCLFy0AmWxS1qbsdYCjbUY8K-gzGzoHsz',
         appKey: 'k949iipHn4oJWiXoBqHuiHaI',
-        placeholder: '有什么想要对我说吗？',
+        placeholder: '如有更好的建议或问题请留言。',
         avatar:'mm',
         guest_info:guest,
         pageSize:'10' || 10,
@@ -1204,7 +1346,32 @@
 
   
 
-  <script type="text/javascript" src="/lib/clipboard/clipboard.js"></script>
-<script type="text/javascript" src="/js/src/custom.js"></script>
+  // 代码块复制功能 
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+
+// <script type="text/javascript" src="/lib/clipboard/clipboard.js"></script>
+// <script type="text/javascript" src="/js/src/custom.js"></script>
+
+
+//highlight.js 
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script type="text/javascript">
+  $(function() {
+      hljs.initHighlighting();
+      $('pre code').each(function() {
+        var lines = $(this).text().split('\n').length - 1;
+        var $numbering = $('<ul/>').addClass('pre-numbering');
+        $(this)
+          .addClass('has-numbering')
+          .parent()
+          .append($numbering);
+        for (i = 1; i <= lines; i++) {
+          $numbering.append($('<li/>'));
+        }
+      });
+    });
+</script>
+
 </body>
 </html>

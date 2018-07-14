@@ -7,6 +7,8 @@
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
+  <link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+  
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
@@ -79,18 +81,18 @@
 
 
 
-<meta name="description" content="atom安装插件被墙问题刚安装的Atom如果用 apm install安装可能会报错，主要原因是atom配置默认使用的源被墙了，可切换到淘宝源来解决 解决方法：打开 命令行模式1apm config set registry http://registry.npm.taobao.org 插件安装 simplified-chinese-menu">
+<meta name="description" content="atom安装插件被墙问题刚安装的Atom如果用 apm install安装可能会报错，主要原因是atom配置默认使用的源被墙了，可切换到淘宝源来解决 解决方法：打开 命令行模式 apm config set registry http://registry.npm.taobao.org 插件安装 simplified-chinese-menu">
 <meta name="keywords" content="markdown,atom">
 <meta property="og:type" content="article">
 <meta property="og:title" content="修改Atom安装插件源为淘宝源">
 <meta property="og:url" content="https://kyyang.io/posts/524561603/index.html">
 <meta property="og:site_name" content="ky.yang">
-<meta property="og:description" content="atom安装插件被墙问题刚安装的Atom如果用 apm install安装可能会报错，主要原因是atom配置默认使用的源被墙了，可切换到淘宝源来解决 解决方法：打开 命令行模式1apm config set registry http://registry.npm.taobao.org 插件安装 simplified-chinese-menu">
+<meta property="og:description" content="atom安装插件被墙问题刚安装的Atom如果用 apm install安装可能会报错，主要原因是atom配置默认使用的源被墙了，可切换到淘宝源来解决 解决方法：打开 命令行模式 apm config set registry http://registry.npm.taobao.org 插件安装 simplified-chinese-menu">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-06-18T13:30:11.374Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="修改Atom安装插件源为淘宝源">
-<meta name="twitter:description" content="atom安装插件被墙问题刚安装的Atom如果用 apm install安装可能会报错，主要原因是atom配置默认使用的源被墙了，可切换到淘宝源来解决 解决方法：打开 命令行模式1apm config set registry http://registry.npm.taobao.org 插件安装 simplified-chinese-menu">
+<meta name="twitter:description" content="atom安装插件被墙问题刚安装的Atom如果用 apm install安装可能会报错，主要原因是atom配置默认使用的源被墙了，可切换到淘宝源来解决 解决方法：打开 命令行模式 apm config set registry http://registry.npm.taobao.org 插件安装 simplified-chinese-menu">
 
 
 
@@ -365,8 +367,9 @@
 
       
         <h1 id="atom安装插件被墙问题"><a href="#atom安装插件被墙问题" class="headerlink" title="atom安装插件被墙问题"></a>atom安装插件被墙问题</h1><p>刚安装的Atom如果用 apm install安装可能会报错，主要原因是atom配置默认使用的源被墙了，可切换到淘宝源来解决</p>
-<p>解决方法：<br>打开 命令行模式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apm config set registry http://registry.npm.taobao.org</span><br></pre></td></tr></table></figure></p>
-<h1 id="插件安装"><a href="#插件安装" class="headerlink" title="插件安装"></a>插件安装</h1><ul>
+<p>解决方法：<br>打开 命令行模式</p>
+<pre><code>apm config set registry http://registry.npm.taobao.org
+</code></pre><h1 id="插件安装"><a href="#插件安装" class="headerlink" title="插件安装"></a>插件安装</h1><ul>
 <li>simplified-chinese-menu</li>
 </ul>
 
@@ -772,7 +775,7 @@
         notify: false,
         appId: 'iCLFy0AmWxS1qbsdYCjbUY8K-gzGzoHsz',
         appKey: 'k949iipHn4oJWiXoBqHuiHaI',
-        placeholder: '有什么想要对我说吗？',
+        placeholder: '如有更好的建议或问题请留言。',
         avatar:'mm',
         guest_info:guest,
         pageSize:'10' || 10,
@@ -1119,7 +1122,32 @@
 
   
 
-  <script type="text/javascript" src="/lib/clipboard/clipboard.js"></script>
-<script type="text/javascript" src="/js/src/custom.js"></script>
+  // 代码块复制功能 
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+
+// <script type="text/javascript" src="/lib/clipboard/clipboard.js"></script>
+// <script type="text/javascript" src="/js/src/custom.js"></script>
+
+
+//highlight.js 
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script type="text/javascript">
+  $(function() {
+      hljs.initHighlighting();
+      $('pre code').each(function() {
+        var lines = $(this).text().split('\n').length - 1;
+        var $numbering = $('<ul/>').addClass('pre-numbering');
+        $(this)
+          .addClass('has-numbering')
+          .parent()
+          .append($numbering);
+        for (i = 1; i <= lines; i++) {
+          $numbering.append($('<li/>'));
+        }
+      });
+    });
+</script>
+
 </body>
 </html>

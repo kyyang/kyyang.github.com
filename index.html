@@ -7,6 +7,8 @@
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
+  <link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+  
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
@@ -392,8 +394,11 @@
 <h3 id="创建TLS-Bootstrapping-token"><a href="#创建TLS-Bootstrapping-token" class="headerlink" title="创建TLS Bootstrapping token"></a>创建TLS Bootstrapping token</h3><ul>
 <li>Token auth file<br>Token可以是任意的包含128 bit的字符串，可以使用安全的随机数发生器生成</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export BOOTSTRAP_TOKEN=$(head -c 16 /dev/urandom | od -An -t x | tr -d &apos; &apos;)</span><br><span class="line">cat &gt; token.csv &lt;&lt;EOF</span><br><span class="line">$&#123;BOOTSTRAP_TOKEN&#125;,kubelet-bootstrap,10001,&quot;system:kubelet-bootstrap&quot;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-<p>注意：在进行后续操作前请检查 token.csv 文件，确认其中的 ${BOOTSTRAP_TOKEN} 环境变量已经被真实的值替换。</p>
+<pre><code>export BOOTSTRAP_TOKEN=$(head -c 16 /dev/urandom | od -An -t x | tr -d &#39; &#39;)
+cat &gt; token.csv &lt;&lt;EOF
+${BOOTSTRAP_TOKEN},kubelet-bootstrap,10001,&quot;system:kubelet-bootstrap&quot;
+EOF
+</code></pre><p>注意：在进行后续操作前请检查 token.csv 文件，确认其中的 ${BOOTSTRAP_TOKEN} 环境变量已经被真实的值替换。</p>
 <p>BOOTSTRAP_TOKEN 将被写入到 kube-apiserver 使用的 token.csv 文件和 kubelet 使用的 bootstrap.kubeconfig 文件，如果后续重新生成了 BOOTSTRAP_TOKEN，则需要：</p>
 <ol>
 <li>更新 token.csv 文件，分发到所有机器 (master 和 node）的 /etc/kubernetes/ 目录下，分发到node节点上非必需；</li>
@@ -401,7 +406,8 @@
 <li>重启 kube-apiserver 和 kubelet 进程；</li>
 <li>重新 approve kubelet 的 csr 请求；</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp token.csv /etc/kubernetes/</span><br></pre></td></tr></table></figure>
+<pre><code>cp token.csv /etc/kubernetes/
+</code></pre>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/posts/4222740584/#more" rel="contents">
@@ -560,8 +566,45 @@
 
       
         
-          <h2 id="创建TLS证书和密钥"><a href="#创建TLS证书和密钥" class="headerlink" title="创建TLS证书和密钥"></a>创建TLS证书和密钥</h2><h3 id="安装CFSSL"><a href="#安装CFSSL" class="headerlink" title="安装CFSSL"></a>安装CFSSL</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">wget https://pkg.cfssl.org/R1.2/cfssl_linux-amd64</span><br><span class="line">chmod +x cfssl_linux-amd64</span><br><span class="line">mv cfssl_linux-amd64 /usr/local/bin/cfssl</span><br><span class="line"></span><br><span class="line">wget https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64</span><br><span class="line">chmod +x cfssljson_linux-amd64</span><br><span class="line">mv cfssljson_linux-amd64 /usr/local/bin/cfssljson</span><br><span class="line"></span><br><span class="line">wget https://pkg.cfssl.org/R1.2/cfssl-certinfo_linux-amd64</span><br><span class="line">chmod +x cfssl-certinfo_linux-amd64</span><br><span class="line">mv cfssl-certinfo_linux-amd64 /usr/local/bin/cfssl-certinfo</span><br></pre></td></tr></table></figure>
-<h3 id="创建CA"><a href="#创建CA" class="headerlink" title="创建CA"></a>创建CA</h3><h4 id="创建CA配置文件"><a href="#创建CA配置文件" class="headerlink" title="创建CA配置文件"></a>创建CA配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">mkdir /root/ssl</span><br><span class="line">cd /root/ssl</span><br><span class="line">cfssl print-defaults config &gt; config.json</span><br><span class="line">cfssl print-defaults csr &gt; csr.json</span><br><span class="line"></span><br><span class="line"># 根据config.json文件的格式创建如下的ca-config.json文件</span><br><span class="line"># 过期时间设置成了 87600h</span><br><span class="line">cat &gt; ca-config.json &lt;&lt;EOF</span><br><span class="line">&#123;</span><br><span class="line">  &quot;signing&quot;: &#123;</span><br><span class="line">    &quot;default&quot;: &#123;</span><br><span class="line">      &quot;expiry&quot;: &quot;87600h&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;profiles&quot;: &#123;</span><br><span class="line">      &quot;kubernetes&quot;: &#123;</span><br><span class="line">        &quot;usages&quot;: [</span><br><span class="line">            &quot;signing&quot;,</span><br><span class="line">            &quot;key encipherment&quot;,</span><br><span class="line">            &quot;server auth&quot;,</span><br><span class="line">            &quot;client auth&quot;</span><br><span class="line">        ],</span><br><span class="line">        &quot;expiry&quot;: &quot;87600h&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+          <h2 id="创建TLS证书和密钥"><a href="#创建TLS证书和密钥" class="headerlink" title="创建TLS证书和密钥"></a>创建TLS证书和密钥</h2><h3 id="安装CFSSL"><a href="#安装CFSSL" class="headerlink" title="安装CFSSL"></a>安装CFSSL</h3><pre><code>wget https://pkg.cfssl.org/R1.2/cfssl_linux-amd64
+chmod +x cfssl_linux-amd64
+mv cfssl_linux-amd64 /usr/local/bin/cfssl
+
+wget https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64
+chmod +x cfssljson_linux-amd64
+mv cfssljson_linux-amd64 /usr/local/bin/cfssljson
+
+wget https://pkg.cfssl.org/R1.2/cfssl-certinfo_linux-amd64
+chmod +x cfssl-certinfo_linux-amd64
+mv cfssl-certinfo_linux-amd64 /usr/local/bin/cfssl-certinfo
+</code></pre><h3 id="创建CA"><a href="#创建CA" class="headerlink" title="创建CA"></a>创建CA</h3><h4 id="创建CA配置文件"><a href="#创建CA配置文件" class="headerlink" title="创建CA配置文件"></a>创建CA配置文件</h4><pre><code>mkdir /root/ssl
+cd /root/ssl
+cfssl print-defaults config &gt; config.json
+cfssl print-defaults csr &gt; csr.json
+
+# 根据config.json文件的格式创建如下的ca-config.json文件
+# 过期时间设置成了 87600h
+cat &gt; ca-config.json &lt;&lt;EOF
+{
+  &quot;signing&quot;: {
+    &quot;default&quot;: {
+      &quot;expiry&quot;: &quot;87600h&quot;
+    },
+    &quot;profiles&quot;: {
+      &quot;kubernetes&quot;: {
+        &quot;usages&quot;: [
+            &quot;signing&quot;,
+            &quot;key encipherment&quot;,
+            &quot;server auth&quot;,
+            &quot;client auth&quot;
+        ],
+        &quot;expiry&quot;: &quot;87600h&quot;
+      }
+    }
+  }
+}
+EOF
+</code></pre>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/posts/3175168585/#more" rel="contents">
@@ -867,6 +910,180 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kyyang.io/posts/1685831840/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ky yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ky.yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/posts/1685831840/" itemprop="url">k8s v1.8.13 拉取私有镜像仓库镜像失败问题处理笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-22T23:06:00+08:00">
+                2018-06-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/1685831840/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/posts/1685831840/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="报错日志"><a href="#报错日志" class="headerlink" title="报错日志"></a>报错日志</h3><pre><code>Failed to pull image  &quot;image-url/web/nginx&quot;: rpc error : code = Unknown desc = error response form daemon: pull access denied for image-url/web/nginx , repository does not exist or may require &#39;docker login&#39;
+</code></pre><h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><pre><code>#创建secret
+kubectl create secret docker-registry SECRET-NAME --docker-server=registry.kyloverose.com  --docker-username=web --docker-password=you-password --docker-email=kyvicp@gmail.com
+
+#配置默认规则,将密钥设置到默认账号中
+kubectl patch serviceaccount default -p &#39;{&quot;imagePullSecrets&quot;: [{&quot;name&quot;: &quot;SECRET-NAME&quot;}]}
+
+#查看默认账号配置
+kubectl get serviceaccounts  default -o yaml
+
+</code></pre><blockquote>
+<p>说明：</p>
+<ul>
+<li>secret名： SECRET-NAME</li>
+<li>–docker-server 为docker login时的域名</li>
+<li>–docker-username 是登录镜仓库的用户名</li>
+<li>–docker-password 登录镜仓库的密码</li>
+<li>–docker-email 邮箱账号</li>
+</ul>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+    <div>
+    
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://kyyang.io/posts/1685831839/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -988,180 +1205,6 @@
 <li><p><a href="https://blog.csdn.net/renfufei/article/details/78178757" target="_blank" rel="noopener">OutOfMemoryError系列（8）: Kill process or sacrifice child</a></p>
 </li>
 </ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-    <div>
-    
-    </div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://kyyang.io/posts/1685831840/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ky yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ky.yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/posts/1685831840/" itemprop="url">k8s v1.8.13 拉取私有镜像仓库镜像失败问题处理笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-22T23:06:00+08:00">
-                2018-06-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/kubernetes/" itemprop="url" rel="index">
-                    <span itemprop="name">kubernetes</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/posts/1685831840/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/posts/1685831840/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="报错日志"><a href="#报错日志" class="headerlink" title="报错日志"></a>报错日志</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Failed to pull image  &quot;image-url/web/nginx&quot;: rpc error : code = Unknown desc = error response form daemon: pull access denied for image-url/web/nginx , repository does not exist or may require &apos;docker login&apos;</span><br></pre></td></tr></table></figure>
-<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><pre><code>#创建secret
-kubectl create secret docker-registry SECRET-NAME --docker-server=registry.kyloverose.com  --docker-username=web --docker-password=you-password --docker-email=kyvicp@gmail.com
-
-#配置默认规则,将密钥设置到默认账号中
-kubectl patch serviceaccount default -p &apos;{&quot;imagePullSecrets&quot;: [{&quot;name&quot;: &quot;SECRET-NAME&quot;}]}
-
-#查看默认账号配置
-kubectl get serviceaccounts  default -o yaml
-
-</code></pre><blockquote>
-<p>说明：</p>
-<ul>
-<li>secret名： SECRET-NAME</li>
-<li>–docker-server 为docker login时的域名</li>
-<li>–docker-username 是登录镜仓库的用户名</li>
-<li>–docker-password 登录镜仓库的密码</li>
-<li>–docker-email 邮箱账号</li>
-</ul>
-</blockquote>
 
           
         
@@ -1486,15 +1529,15 @@ kubectl get serviceaccounts  default -o yaml
       
         
           <h1 id="节点规划"><a href="#节点规划" class="headerlink" title="节点规划"></a>节点规划</h1><ul>
-<li><p>数据节点 ：只存储索引数据和数据查询</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node.master: false </span><br><span class="line">node.data: true</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Master节点：不存储任何索引数据。该node主要协调各种创建索引请求或者查询请求，将这些请求合理分发到相关 的node服务器上</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node.master: true </span><br><span class="line">node.data: false</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>只读节点：不会被选作主节点，也不会存储任何索引数据。该服务器主要用 于查询负载均衡。在查询的时候，通常会涉及到从多个node服务器上查询数据，并请 求分发到多个指定的node服务器，并对各个node服务器返回的结果进行一个汇总处理， 最终返回给客户端。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node.master: false </span><br><span class="line">node.data: false</span><br></pre></td></tr></table></figure>
-</li>
+<li>数据节点 ：只存储索引数据和数据查询<pre><code>node.master: false 
+node.data: true
+</code></pre></li>
+<li>Master节点：不存储任何索引数据。该node主要协调各种创建索引请求或者查询请求，将这些请求合理分发到相关 的node服务器上<pre><code>node.master: true 
+node.data: false
+</code></pre></li>
+<li>只读节点：不会被选作主节点，也不会存储任何索引数据。该服务器主要用 于查询负载均衡。在查询的时候，通常会涉及到从多个node服务器上查询数据，并请 求分发到多个指定的node服务器，并对各个node服务器返回的结果进行一个汇总处理， 最终返回给客户端。<pre><code>node.master: false 
+node.data: false
+</code></pre></li>
 </ul>
 <h1 id="关闭data节点服务器中的http功能"><a href="#关闭data节点服务器中的http功能" class="headerlink" title="关闭data节点服务器中的http功能"></a>关闭data节点服务器中的http功能</h1><p>针对ElasticSearch集群中的所有数据节点，不用开启http服务。将其中的配置 参数这样设置：<code>http.enabled: false</code></p>
 <blockquote>
@@ -1502,14 +1545,17 @@ kubectl get serviceaccounts  default -o yaml
 </blockquote>
 <h1 id="一个服务器只部署一个数据节点"><a href="#一个服务器只部署一个数据节点" class="headerlink" title="一个服务器只部署一个数据节点"></a>一个服务器只部署一个数据节点</h1><ul>
 <li>服务器硬件配置建议：内存&gt;64G，cpu 16C, </li>
-<li>服务器内存分配建议：以64G内存为例，jvm内存最大堆最大大小32G（不建议超32G）, GC 算法建议使用GC1，默认CMS。如果大于128G可以跑两个ES实例。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ES_MIN_MEM=32g</span><br><span class="line">ES_MAX_MEM=32g</span><br><span class="line">JAVA_OPTS=&quot;$JAVA_OPTS -XX:+UseG1GC&quot;</span><br><span class="line">JAVA_OPTS=&quot;$JAVA_OPTS -XX:MaxGCPauseMillis=200 -Xss128m&quot;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
+<li><p>服务器内存分配建议：以64G内存为例，jvm内存最大堆最大大小32G（不建议超32G）, GC 算法建议使用GC1，默认CMS。如果大于128G可以跑两个ES实例。</p>
+<pre><code>ES_MIN_MEM=32g
+ES_MAX_MEM=32g
+JAVA_OPTS=&quot;$JAVA_OPTS -XX:+UseG1GC&quot;
+JAVA_OPTS=&quot;$JAVA_OPTS -XX:MaxGCPauseMillis=200 -Xss128m&quot;
+</code></pre><blockquote>
 <p>如果在一个机器上跑多个ES实例，需设置 <code>cluster.routing.allocation.same_shard.host:true</code> 参数，防止同一个shard的主副本存在同一个物理机上, -Xss设置线程大小</p>
 </blockquote>
-<ul>
-<li>Master节点建议CPU 内核数 &gt;=16</li>
+</li>
+<li><p>Master节点建议CPU 内核数 &gt;=16</p>
+</li>
 <li>数据节点建议SSD+Reid 0<blockquote>
 <p>比如100节点的ES集群，建议至少3个master 节点，10个只读节点，剩下全是数据节点。</p>
 </blockquote>
@@ -1674,18 +1720,36 @@ kubectl get serviceaccounts  default -o yaml
       
         
           <ol>
-<li><p>create project</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ django-admin startproject blogproject</span><br><span class="line">$ cd blogproject</span><br><span class="line">$ tree</span><br><span class="line">        manage.py </span><br><span class="line">        blogproject/</span><br><span class="line">        __init__.py </span><br><span class="line">        settings.py </span><br><span class="line">        urls.py </span><br><span class="line">        wsgi.py</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改Django 默认的语言，缺省是英语</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">blogproject/settings.py</span><br><span class="line">## 其它配置代码... </span><br><span class="line">LANGUAGE_CODE = &apos;zh-hans&apos;  #default value is en-us</span><br><span class="line">TIME_ZONE = &apos;Asia/Shanghai&apos; #default value is UTC</span><br><span class="line">## 其它配置代码...</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>start django server</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py runserver 8000 #start server at 8000 port</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>create application</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ python manage.py startapp blog</span><br><span class="line">##目录结构如下：</span><br><span class="line">blog/</span><br><span class="line">       __init__.py</span><br><span class="line">       admin.py </span><br><span class="line">       apps.py </span><br><span class="line">       migrations/</span><br><span class="line">               __init__.py </span><br><span class="line">       models.py </span><br><span class="line">       tests.py </span><br><span class="line">       views.py</span><br></pre></td></tr></table></figure>
-</li>
+<li>create project<pre><code>$ django-admin startproject blogproject
+$ cd blogproject
+$ tree
+     manage.py 
+     blogproject/
+     __init__.py 
+     settings.py 
+     urls.py 
+     wsgi.py
+</code></pre></li>
+<li>修改Django 默认的语言，缺省是英语<pre><code>blogproject/settings.py
+## 其它配置代码... 
+LANGUAGE_CODE = &#39;zh-hans&#39;  #default value is en-us
+TIME_ZONE = &#39;Asia/Shanghai&#39; #default value is UTC
+## 其它配置代码...
+</code></pre></li>
+<li>start django server<pre><code>python manage.py runserver 8000 #start server at 8000 port
+</code></pre></li>
+<li>create application<pre><code>$ python manage.py startapp blog
+##目录结构如下：
+blog/
+    __init__.py
+    admin.py 
+    apps.py 
+    migrations/
+            __init__.py 
+    models.py 
+    tests.py 
+    views.py
+</code></pre></li>
 </ol>
           <!--noindex-->
           <div class="post-button text-center">
@@ -2003,8 +2067,9 @@ kubectl get serviceaccounts  default -o yaml
         
           
             <h1 id="atom安装插件被墙问题"><a href="#atom安装插件被墙问题" class="headerlink" title="atom安装插件被墙问题"></a>atom安装插件被墙问题</h1><p>刚安装的Atom如果用 apm install安装可能会报错，主要原因是atom配置默认使用的源被墙了，可切换到淘宝源来解决</p>
-<p>解决方法：<br>打开 命令行模式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apm config set registry http://registry.npm.taobao.org</span><br></pre></td></tr></table></figure></p>
-<h1 id="插件安装"><a href="#插件安装" class="headerlink" title="插件安装"></a>插件安装</h1><ul>
+<p>解决方法：<br>打开 命令行模式</p>
+<pre><code>apm config set registry http://registry.npm.taobao.org
+</code></pre><h1 id="插件安装"><a href="#插件安装" class="headerlink" title="插件安装"></a>插件安装</h1><ul>
 <li>simplified-chinese-menu</li>
 </ul>
 
@@ -2343,7 +2408,7 @@ kubectl get serviceaccounts  default -o yaml
         notify: false,
         appId: 'iCLFy0AmWxS1qbsdYCjbUY8K-gzGzoHsz',
         appKey: 'k949iipHn4oJWiXoBqHuiHaI',
-        placeholder: '有什么想要对我说吗？',
+        placeholder: '如有更好的建议或问题请留言。',
         avatar:'mm',
         guest_info:guest,
         pageSize:'10' || 10,
@@ -2690,7 +2755,32 @@ kubectl get serviceaccounts  default -o yaml
 
   
 
-  <script type="text/javascript" src="/lib/clipboard/clipboard.js"></script>
-<script type="text/javascript" src="/js/src/custom.js"></script>
+  // 代码块复制功能 
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+
+// <script type="text/javascript" src="/lib/clipboard/clipboard.js"></script>
+// <script type="text/javascript" src="/js/src/custom.js"></script>
+
+
+//highlight.js 
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script type="text/javascript">
+  $(function() {
+      hljs.initHighlighting();
+      $('pre code').each(function() {
+        var lines = $(this).text().split('\n').length - 1;
+        var $numbering = $('<ul/>').addClass('pre-numbering');
+        $(this)
+          .addClass('has-numbering')
+          .parent()
+          .append($numbering);
+        for (i = 1; i <= lines; i++) {
+          $numbering.append($('<li/>'));
+        }
+      });
+    });
+</script>
+
 </body>
 </html>

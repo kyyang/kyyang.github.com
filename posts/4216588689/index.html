@@ -7,6 +7,8 @@
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
+  <link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+  
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
@@ -79,18 +81,18 @@
 
 
 
-<meta name="description" content="节点规划 数据节点 ：只存储索引数据和数据查询 12node.master: false node.data: true  Master节点：不存储任何索引数据。该node主要协调各种创建索引请求或者查询请求，将这些请求合理分发到相关 的node服务器上 12node.master: true node.data: false  只读节点：不会被选作主节点，也不会存储任何索引数据。该服务器主要用">
+<meta name="description" content="节点规划 数据节点 ：只存储索引数据和数据查询node.master: false  node.data: true  Master节点：不存储任何索引数据。该node主要协调各种创建索引请求或者查询请求，将这些请求合理分发到相关 的node服务器上node.master: true  node.data: false  只读节点：不会被选作主节点，也不会存储任何索引数据。该服务器主要用 于查询负">
 <meta name="keywords" content="elk">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ELK优化笔记">
 <meta property="og:url" content="https://kyyang.io/posts/4216588689/index.html">
 <meta property="og:site_name" content="ky.yang">
-<meta property="og:description" content="节点规划 数据节点 ：只存储索引数据和数据查询 12node.master: false node.data: true  Master节点：不存储任何索引数据。该node主要协调各种创建索引请求或者查询请求，将这些请求合理分发到相关 的node服务器上 12node.master: true node.data: false  只读节点：不会被选作主节点，也不会存储任何索引数据。该服务器主要用">
+<meta property="og:description" content="节点规划 数据节点 ：只存储索引数据和数据查询node.master: false  node.data: true  Master节点：不存储任何索引数据。该node主要协调各种创建索引请求或者查询请求，将这些请求合理分发到相关 的node服务器上node.master: true  node.data: false  只读节点：不会被选作主节点，也不会存储任何索引数据。该服务器主要用 于查询负">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-07-14T06:52:06.556Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ELK优化笔记">
-<meta name="twitter:description" content="节点规划 数据节点 ：只存储索引数据和数据查询 12node.master: false node.data: true  Master节点：不存储任何索引数据。该node主要协调各种创建索引请求或者查询请求，将这些请求合理分发到相关 的node服务器上 12node.master: true node.data: false  只读节点：不会被选作主节点，也不会存储任何索引数据。该服务器主要用">
+<meta name="twitter:description" content="节点规划 数据节点 ：只存储索引数据和数据查询node.master: false  node.data: true  Master节点：不存储任何索引数据。该node主要协调各种创建索引请求或者查询请求，将这些请求合理分发到相关 的node服务器上node.master: true  node.data: false  只读节点：不会被选作主节点，也不会存储任何索引数据。该服务器主要用 于查询负">
 
 
 
@@ -387,15 +389,15 @@
 
       
         <h1 id="节点规划"><a href="#节点规划" class="headerlink" title="节点规划"></a>节点规划</h1><ul>
-<li><p>数据节点 ：只存储索引数据和数据查询</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node.master: false </span><br><span class="line">node.data: true</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Master节点：不存储任何索引数据。该node主要协调各种创建索引请求或者查询请求，将这些请求合理分发到相关 的node服务器上</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node.master: true </span><br><span class="line">node.data: false</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>只读节点：不会被选作主节点，也不会存储任何索引数据。该服务器主要用 于查询负载均衡。在查询的时候，通常会涉及到从多个node服务器上查询数据，并请 求分发到多个指定的node服务器，并对各个node服务器返回的结果进行一个汇总处理， 最终返回给客户端。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node.master: false </span><br><span class="line">node.data: false</span><br></pre></td></tr></table></figure>
-</li>
+<li>数据节点 ：只存储索引数据和数据查询<pre><code>node.master: false 
+node.data: true
+</code></pre></li>
+<li>Master节点：不存储任何索引数据。该node主要协调各种创建索引请求或者查询请求，将这些请求合理分发到相关 的node服务器上<pre><code>node.master: true 
+node.data: false
+</code></pre></li>
+<li>只读节点：不会被选作主节点，也不会存储任何索引数据。该服务器主要用 于查询负载均衡。在查询的时候，通常会涉及到从多个node服务器上查询数据，并请 求分发到多个指定的node服务器，并对各个node服务器返回的结果进行一个汇总处理， 最终返回给客户端。<pre><code>node.master: false 
+node.data: false
+</code></pre></li>
 </ul>
 <h1 id="关闭data节点服务器中的http功能"><a href="#关闭data节点服务器中的http功能" class="headerlink" title="关闭data节点服务器中的http功能"></a>关闭data节点服务器中的http功能</h1><p>针对ElasticSearch集群中的所有数据节点，不用开启http服务。将其中的配置 参数这样设置：<code>http.enabled: false</code></p>
 <blockquote>
@@ -403,14 +405,17 @@
 </blockquote>
 <h1 id="一个服务器只部署一个数据节点"><a href="#一个服务器只部署一个数据节点" class="headerlink" title="一个服务器只部署一个数据节点"></a>一个服务器只部署一个数据节点</h1><ul>
 <li>服务器硬件配置建议：内存&gt;64G，cpu 16C, </li>
-<li>服务器内存分配建议：以64G内存为例，jvm内存最大堆最大大小32G（不建议超32G）, GC 算法建议使用GC1，默认CMS。如果大于128G可以跑两个ES实例。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ES_MIN_MEM=32g</span><br><span class="line">ES_MAX_MEM=32g</span><br><span class="line">JAVA_OPTS=&quot;$JAVA_OPTS -XX:+UseG1GC&quot;</span><br><span class="line">JAVA_OPTS=&quot;$JAVA_OPTS -XX:MaxGCPauseMillis=200 -Xss128m&quot;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
+<li><p>服务器内存分配建议：以64G内存为例，jvm内存最大堆最大大小32G（不建议超32G）, GC 算法建议使用GC1，默认CMS。如果大于128G可以跑两个ES实例。</p>
+<pre><code>ES_MIN_MEM=32g
+ES_MAX_MEM=32g
+JAVA_OPTS=&quot;$JAVA_OPTS -XX:+UseG1GC&quot;
+JAVA_OPTS=&quot;$JAVA_OPTS -XX:MaxGCPauseMillis=200 -Xss128m&quot;
+</code></pre><blockquote>
 <p>如果在一个机器上跑多个ES实例，需设置 <code>cluster.routing.allocation.same_shard.host:true</code> 参数，防止同一个shard的主副本存在同一个物理机上, -Xss设置线程大小</p>
 </blockquote>
-<ul>
-<li>Master节点建议CPU 内核数 &gt;=16</li>
+</li>
+<li><p>Master节点建议CPU 内核数 &gt;=16</p>
+</li>
 <li>数据节点建议SSD+Reid 0<blockquote>
 <p>比如100节点的ES集群，建议至少3个master 节点，10个只读节点，剩下全是数据节点。</p>
 </blockquote>
@@ -422,32 +427,31 @@
 </li>
 <li><p>mlockall配置文件设置：<code>bootstrap.mlockall: true</code></p>
 </li>
-<li><p>ulimit设置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ulimit -n 65536</span><br><span class="line">ulimit -l unlimited</span><br><span class="line">ulimit -s unlimited</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>segment memory内存优化：<br>a. 删除不用使用索引;<br>b. 关闭索引;<br>c. 定期对不再更新的索引做optimize（合并segment memory）;</p>
-</li>
-<li>索引的settings进行优化：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;index.translog.flush_threshold_ops&quot;:&quot;10000&quot; </span><br><span class="line">&quot;refresh_interval&quot; : &quot;1s&quot;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
+<li>ulimit设置<pre><code>ulimit -n 65536
+ulimit -l unlimited
+ulimit -s unlimited
+</code></pre></li>
+<li>segment memory内存优化：<br>a. 删除不用使用索引;<br>b. 关闭索引;<br>c. 定期对不再更新的索引做optimize（合并segment memory）;</li>
+<li>索引的settings进行优化：<pre><code>&quot;index.translog.flush_threshold_ops&quot;:&quot;10000&quot; 
+&quot;refresh_interval&quot; : &quot;1s&quot;
+</code></pre><blockquote>
 <p>这两个参数第一是到translog数据达到多少条进行平衡，默认为5000，而这个过程相对而言是比较浪费时间和资源的。所以我们可以将这个值调大一些还是设为-1关闭，进而手动进行translog平衡。第二参数是刷新频率，默认为1s是指索引在生命周期内定时刷新，一但有数据进来能refresh像lucene里面commit,我们知道当数据addDoucment后，还不能检索到要commit之后才能行数据的检索，所以可以将其关闭，在最初索引完后手动refresh之，然后将索引setting里面的index.refresh_interval参数按需求进行修改，从而可以提高索引过程效率。</p>
-<ul>
-<li>索引副本数:   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;number_of_replicas&quot;: 0</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
 </blockquote>
-<blockquote>
+</li>
+<li><p>索引副本数:   </p>
+<pre><code>&quot;number_of_replicas&quot;: 0
+</code></pre><blockquote>
 <p>建议在索引过程中将副本数设为0，待索引完成后将副本数按需量改回来，这样也可以提高索引效率。</p>
 </blockquote>
-<ul>
-<li>分片数，计算公式：基于索引分片数=数据总量/单分片数</li>
+</li>
+<li><p>分片数，计算公式：基于索引分片数=数据总量/单分片数</p>
+</li>
 </ul>
 <blockquote>
-<p>分片（Shard）：一个索引会分成多个分片存储，分片数量在索引建立后不可更改，推荐【分片数*副本数=集群数量】 ，默认配置如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">index.number_of_shards: 5 </span><br><span class="line">number_of_replicas: 1</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<blockquote>
-<p>Elastic官方文档建议：一个Node中一个索引最好不要多于三个shards，配置total_shards_per_node参数，限制每个index每个节点最多分配多少个发片.</p>
+<p>分片（Shard）：一个索引会分成多个分片存储，分片数量在索引建立后不可更改，推荐【分片数*副本数=集群数量】 ，默认配置如下：</p>
+<pre><code>index.number_of_shards: 5 
+number_of_replicas: 1
+</code></pre><p>Elastic官方文档建议：一个Node中一个索引最好不要多于三个shards，配置total_shards_per_node参数，限制每个index每个节点最多分配多少个发片.</p>
 </blockquote>
 
       
@@ -850,7 +854,7 @@
         notify: false,
         appId: 'iCLFy0AmWxS1qbsdYCjbUY8K-gzGzoHsz',
         appKey: 'k949iipHn4oJWiXoBqHuiHaI',
-        placeholder: '有什么想要对我说吗？',
+        placeholder: '如有更好的建议或问题请留言。',
         avatar:'mm',
         guest_info:guest,
         pageSize:'10' || 10,
@@ -1197,7 +1201,32 @@
 
   
 
-  <script type="text/javascript" src="/lib/clipboard/clipboard.js"></script>
-<script type="text/javascript" src="/js/src/custom.js"></script>
+  // 代码块复制功能 
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+
+// <script type="text/javascript" src="/lib/clipboard/clipboard.js"></script>
+// <script type="text/javascript" src="/js/src/custom.js"></script>
+
+
+//highlight.js 
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script type="text/javascript">
+  $(function() {
+      hljs.initHighlighting();
+      $('pre code').each(function() {
+        var lines = $(this).text().split('\n').length - 1;
+        var $numbering = $('<ul/>').addClass('pre-numbering');
+        $(this)
+          .addClass('has-numbering')
+          .parent()
+          .append($numbering);
+        for (i = 1; i <= lines; i++) {
+          $numbering.append($('<li/>'));
+        }
+      });
+    });
+</script>
+
 </body>
 </html>

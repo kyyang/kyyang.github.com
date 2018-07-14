@@ -7,6 +7,8 @@
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
+  <link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+  
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
@@ -79,18 +81,18 @@
 
 
 
-<meta name="description" content="12345678worker_processes auto; #默认是1，通常设置为CPU 个数，如不清楚，可设为auto.worker_connections 10240; #默认值是1024，单个worker进程处理最大连接数.keepalive_requests 128; #单个持久连接最大发送请求数，默认100keepalive_timeout 60; #空闲持久连接超时时间keepali">
+<meta name="description" content="worker_processes auto; #默认是1，通常设置为CPU 个数，如不清楚，可设为auto. worker_connections 10240; #默认值是1024，单个worker进程处理最大连接数. keepalive_requests 128; #单个持久连接最大发送请求数，默认100 keepalive_timeout 60; #空闲持久连接超时时间 keepalive 3">
 <meta name="keywords" content="web">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nginx性能优化调整">
 <meta property="og:url" content="https://kyyang.io/posts/4197081107/index.html">
 <meta property="og:site_name" content="ky.yang">
-<meta property="og:description" content="12345678worker_processes auto; #默认是1，通常设置为CPU 个数，如不清楚，可设为auto.worker_connections 10240; #默认值是1024，单个worker进程处理最大连接数.keepalive_requests 128; #单个持久连接最大发送请求数，默认100keepalive_timeout 60; #空闲持久连接超时时间keepali">
+<meta property="og:description" content="worker_processes auto; #默认是1，通常设置为CPU 个数，如不清楚，可设为auto. worker_connections 10240; #默认值是1024，单个worker进程处理最大连接数. keepalive_requests 128; #单个持久连接最大发送请求数，默认100 keepalive_timeout 60; #空闲持久连接超时时间 keepalive 3">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-07-14T06:51:07.448Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nginx性能优化调整">
-<meta name="twitter:description" content="12345678worker_processes auto; #默认是1，通常设置为CPU 个数，如不清楚，可设为auto.worker_connections 10240; #默认值是1024，单个worker进程处理最大连接数.keepalive_requests 128; #单个持久连接最大发送请求数，默认100keepalive_timeout 60; #空闲持久连接超时时间keepali">
+<meta name="twitter:description" content="worker_processes auto; #默认是1，通常设置为CPU 个数，如不清楚，可设为auto. worker_connections 10240; #默认值是1024，单个worker进程处理最大连接数. keepalive_requests 128; #单个持久连接最大发送请求数，默认100 keepalive_timeout 60; #空闲持久连接超时时间 keepalive 3">
 
 
 
@@ -364,14 +366,41 @@
       
 
       
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">worker_processes auto; #默认是1，通常设置为CPU 个数，如不清楚，可设为auto.</span><br><span class="line">worker_connections 10240; #默认值是1024，单个worker进程处理最大连接数.</span><br><span class="line">keepalive_requests 128; #单个持久连接最大发送请求数，默认100</span><br><span class="line">keepalive_timeout 60; #空闲持久连接超时时间</span><br><span class="line">keepalive 32; #upstream持久连接</span><br><span class="line">proxy_http_version 1.1;</span><br><span class="line">proxy_set_header Connection &quot;&quot;;</span><br><span class="line">sendfile on;</span><br></pre></td></tr></table></figure>
-<p>缓存：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location ~* \.(jpg|jpeg|png|gif|ico|js|htm|html)$ &#123; </span><br><span class="line">     expires 10d;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>开启压缩<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">gzip  on;</span><br><span class="line">gzip_min_length 1k;</span><br><span class="line">gzip_buffers   4 16k;</span><br><span class="line">gzip_http_version 1.0;</span><br><span class="line">gzip_comp_level 2;</span><br><span class="line">gzip_types    text/plain application/x-javascript text/css application/xml;</span><br><span class="line">gzip_vary on;</span><br></pre></td></tr></table></figure></p>
-<a id="more"></a>
-<p>关闭access日志打印<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">    access_log off;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>nofile and nproc 设置为合理的值, 修改/etc/security/limits.conf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">myuser	-	nofile	10240</span><br><span class="line">myuser	-	nproc	10240</span><br></pre></td></tr></table></figure></p>
-<p>修改kernel参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">net.ipv4.ip_local_port_range = 32768	60999</span><br><span class="line">net.ipv4.tcp_fin_timeout = 60</span><br><span class="line">net.ipv4.tcp_tw_reuse = 1 #TCP连接重用</span><br><span class="line">net.core.somaxconn = 256 #该项设置等待被Nginx接受的连接的排队大小</span><br></pre></td></tr></table></figure></p>
+        <pre><code>worker_processes auto; #默认是1，通常设置为CPU 个数，如不清楚，可设为auto.
+worker_connections 10240; #默认值是1024，单个worker进程处理最大连接数.
+keepalive_requests 128; #单个持久连接最大发送请求数，默认100
+keepalive_timeout 60; #空闲持久连接超时时间
+keepalive 32; #upstream持久连接
+proxy_http_version 1.1;
+proxy_set_header Connection &quot;&quot;;
+sendfile on;
+</code></pre><p>缓存：</p>
+<pre><code>location ~* \.(jpg|jpeg|png|gif|ico|js|htm|html)$ { 
+     expires 10d;
+}
+</code></pre><p>开启压缩</p>
+<pre><code>gzip  on;
+gzip_min_length 1k;
+gzip_buffers   4 16k;
+gzip_http_version 1.0;
+gzip_comp_level 2;
+gzip_types    text/plain application/x-javascript text/css application/xml;
+gzip_vary on;
 
+</code></pre><a id="more"></a>
+<p>关闭access日志打印</p>
+<pre><code>http {
+    access_log off;
+}
+</code></pre><p>nofile and nproc 设置为合理的值, 修改/etc/security/limits.conf</p>
+<pre><code>myuser    -    nofile    10240
+myuser    -    nproc    10240
+</code></pre><p>修改kernel参数</p>
+<pre><code>net.ipv4.ip_local_port_range = 32768    60999
+net.ipv4.tcp_fin_timeout = 60
+net.ipv4.tcp_tw_reuse = 1 #TCP连接重用
+net.core.somaxconn = 256 #该项设置等待被Nginx接受的连接的排队大小
+</code></pre>
       
     </div>
     
@@ -412,18 +441,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/2903914866/" rel="next" title="安装 Node JS">
-                <i class="fa fa-chevron-left"></i> 安装 Node JS
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/posts/1509149701/" rel="prev" title="使用Percona XtraBackup工具备份mysql数据库">
-                使用Percona XtraBackup工具备份mysql数据库 <i class="fa fa-chevron-right"></i>
+              <a href="/posts/2903914866/" rel="prev" title="安装 Node JS">
+                安装 Node JS <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -747,7 +772,7 @@
         notify: false,
         appId: 'iCLFy0AmWxS1qbsdYCjbUY8K-gzGzoHsz',
         appKey: 'k949iipHn4oJWiXoBqHuiHaI',
-        placeholder: '有什么想要对我说吗？',
+        placeholder: '如有更好的建议或问题请留言。',
         avatar:'mm',
         guest_info:guest,
         pageSize:'10' || 10,
@@ -1094,7 +1119,32 @@
 
   
 
-  <script type="text/javascript" src="/lib/clipboard/clipboard.js"></script>
-<script type="text/javascript" src="/js/src/custom.js"></script>
+  // 代码块复制功能 
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+
+// <script type="text/javascript" src="/lib/clipboard/clipboard.js"></script>
+// <script type="text/javascript" src="/js/src/custom.js"></script>
+
+
+//highlight.js 
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script type="text/javascript">
+  $(function() {
+      hljs.initHighlighting();
+      $('pre code').each(function() {
+        var lines = $(this).text().split('\n').length - 1;
+        var $numbering = $('<ul/>').addClass('pre-numbering');
+        $(this)
+          .addClass('has-numbering')
+          .parent()
+          .append($numbering);
+        for (i = 1; i <= lines; i++) {
+          $numbering.append($('<li/>'));
+        }
+      });
+    });
+</script>
+
 </body>
 </html>

@@ -7,6 +7,8 @@
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
+  <link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+  
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
@@ -79,18 +81,18 @@
 
 
 
-<meta name="description" content="报错日志1Failed to pull image  &amp;quot;image-url/web/nginx&amp;quot;: rpc error : code = Unknown desc = error response form daemon: pull access denied for image-url/web/nginx , repository does not exist or may">
+<meta name="description" content="报错日志Failed to pull image  &amp;quot;image-url/web/nginx&amp;quot;: rpc error : code = Unknown desc = error response form daemon: pull access denied for image-url/web/nginx , repository does not exist or may r">
 <meta name="keywords" content="docker,harbor">
 <meta property="og:type" content="article">
 <meta property="og:title" content="k8s v1.8.13 拉取私有镜像仓库镜像失败问题处理笔记">
 <meta property="og:url" content="https://kyyang.io/posts/1685831840/index.html">
 <meta property="og:site_name" content="ky.yang">
-<meta property="og:description" content="报错日志1Failed to pull image  &amp;quot;image-url/web/nginx&amp;quot;: rpc error : code = Unknown desc = error response form daemon: pull access denied for image-url/web/nginx , repository does not exist or may">
+<meta property="og:description" content="报错日志Failed to pull image  &amp;quot;image-url/web/nginx&amp;quot;: rpc error : code = Unknown desc = error response form daemon: pull access denied for image-url/web/nginx , repository does not exist or may r">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-06-22T15:18:00.452Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="k8s v1.8.13 拉取私有镜像仓库镜像失败问题处理笔记">
-<meta name="twitter:description" content="报错日志1Failed to pull image  &amp;quot;image-url/web/nginx&amp;quot;: rpc error : code = Unknown desc = error response form daemon: pull access denied for image-url/web/nginx , repository does not exist or may">
+<meta name="twitter:description" content="报错日志Failed to pull image  &amp;quot;image-url/web/nginx&amp;quot;: rpc error : code = Unknown desc = error response form daemon: pull access denied for image-url/web/nginx , repository does not exist or may r">
 
 
 
@@ -386,12 +388,12 @@
       
 
       
-        <h3 id="报错日志"><a href="#报错日志" class="headerlink" title="报错日志"></a>报错日志</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Failed to pull image  &quot;image-url/web/nginx&quot;: rpc error : code = Unknown desc = error response form daemon: pull access denied for image-url/web/nginx , repository does not exist or may require &apos;docker login&apos;</span><br></pre></td></tr></table></figure>
-<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><pre><code>#创建secret
+        <h3 id="报错日志"><a href="#报错日志" class="headerlink" title="报错日志"></a>报错日志</h3><pre><code>Failed to pull image  &quot;image-url/web/nginx&quot;: rpc error : code = Unknown desc = error response form daemon: pull access denied for image-url/web/nginx , repository does not exist or may require &#39;docker login&#39;
+</code></pre><h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><pre><code>#创建secret
 kubectl create secret docker-registry SECRET-NAME --docker-server=registry.kyloverose.com  --docker-username=web --docker-password=you-password --docker-email=kyvicp@gmail.com
 
 #配置默认规则,将密钥设置到默认账号中
-kubectl patch serviceaccount default -p &apos;{&quot;imagePullSecrets&quot;: [{&quot;name&quot;: &quot;SECRET-NAME&quot;}]}
+kubectl patch serviceaccount default -p &#39;{&quot;imagePullSecrets&quot;: [{&quot;name&quot;: &quot;SECRET-NAME&quot;}]}
 
 #查看默认账号配置
 kubectl get serviceaccounts  default -o yaml
@@ -449,8 +451,8 @@ kubectl get serviceaccounts  default -o yaml
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/4238961614/" rel="next" title="GC垃圾回收">
-                <i class="fa fa-chevron-left"></i> GC垃圾回收
+              <a href="/posts/1685831839/" rel="next" title="OutOfMemoryError系列">
+                <i class="fa fa-chevron-left"></i> OutOfMemoryError系列
               </a>
             
           </div>
@@ -459,8 +461,8 @@ kubectl get serviceaccounts  default -o yaml
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/posts/1685831839/" rel="prev" title="OutOfMemoryError系列">
-                OutOfMemoryError系列 <i class="fa fa-chevron-right"></i>
+              <a href="/posts/1711085942/" rel="prev" title="搭建kubernetes高可用集群-01准备环境">
+                搭建kubernetes高可用集群-01准备环境 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -809,7 +811,7 @@ kubectl get serviceaccounts  default -o yaml
         notify: false,
         appId: 'iCLFy0AmWxS1qbsdYCjbUY8K-gzGzoHsz',
         appKey: 'k949iipHn4oJWiXoBqHuiHaI',
-        placeholder: '有什么想要对我说吗？',
+        placeholder: '如有更好的建议或问题请留言。',
         avatar:'mm',
         guest_info:guest,
         pageSize:'10' || 10,
@@ -1156,7 +1158,32 @@ kubectl get serviceaccounts  default -o yaml
 
   
 
-  <script type="text/javascript" src="/lib/clipboard/clipboard.js"></script>
-<script type="text/javascript" src="/js/src/custom.js"></script>
+  // 代码块复制功能 
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+
+// <script type="text/javascript" src="/lib/clipboard/clipboard.js"></script>
+// <script type="text/javascript" src="/js/src/custom.js"></script>
+
+
+//highlight.js 
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script type="text/javascript">
+  $(function() {
+      hljs.initHighlighting();
+      $('pre code').each(function() {
+        var lines = $(this).text().split('\n').length - 1;
+        var $numbering = $('<ul/>').addClass('pre-numbering');
+        $(this)
+          .addClass('has-numbering')
+          .parent()
+          .append($numbering);
+        for (i = 1; i <= lines; i++) {
+          $numbering.append($('<li/>'));
+        }
+      });
+    });
+</script>
+
 </body>
 </html>
