@@ -82,7 +82,7 @@
 <meta name="description" content="This is my blog.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="ky.yang">
-<meta property="og:url" content="http://kyyang.io/page/2/index.html">
+<meta property="og:url" content="https://kyyang.io/page/2/index.html">
 <meta property="og:site_name" content="ky.yang">
 <meta property="og:description" content="This is my blog.">
 <meta property="og:locale" content="zh-Hans">
@@ -118,7 +118,7 @@
 
 
 
-  <link rel="canonical" href="http://kyyang.io/page/2/"/>
+  <link rel="canonical" href="https://kyyang.io/page/2/"/>
 
 
 
@@ -286,7 +286,192 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kyyang.io/posts/1509149701/">
+    <link itemprop="mainEntityOfPage" href="https://kyyang.io/posts/4168307710/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ky yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ky.yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/posts/4168307710/" itemprop="url">docker核心技术笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-18T15:33:09+08:00">
+                2018-06-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/docker/" itemprop="url" rel="index">
+                    <span itemprop="name">docker</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/4168307710/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/posts/4168307710/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="namespace"><a href="#namespace" class="headerlink" title="namespace"></a>namespace</h1><p>命名空间（namespaces）是 Linux 为我们提供的用于分离进程树、网络接口、挂载点以及进程间通信等资源的方法。</p>
+<h2 id="pid-namespace"><a href="#pid-namespace" class="headerlink" title="pid namespace"></a>pid namespace</h2><p>不同使用者的程式就是透過 pid 命名空間隔離開的，且不同命名空間中可以有相同 pid</p>
+<h2 id="net-namespace"><a href="#net-namespace" class="headerlink" title="net namespace"></a>net namespace</h2><p>網路隔離是透過 net 命名空間實作的， 每個 net 命名空間有獨立的網路設備, IP 位址, 路由表, /proc/net 目錄。這樣每個容器的網路就能隔離開來。Docker 預設採用 veth 的方式，將容器中的虛擬網卡同 host 上的一個 Docker 橋接器 docker0 連接在一起。</p>
+<h2 id="ipc-namespace"><a href="#ipc-namespace" class="headerlink" title="ipc namespace"></a>ipc namespace</h2><p>容器中程式互動還是採用了 Linux 常見的程式間互動方法 (interprocess communication - IPC), 包括信號量、消息隊列和共享記憶體等。然而同 VM 不同的是，容器的程式間互動實際上還是 host 上具有相同 pid 命名空間中的程式間互動，因此需要在 IPC 資源申請時加入命名空間訊息，每個 IPC 資源有一個唯一的 32 位 id。</p>
+<h2 id="mnt-namespace"><a href="#mnt-namespace" class="headerlink" title="mnt namespace"></a>mnt namespace</h2><p>類似 chroot，將一個程式放到一個特定的目錄執行。mnt 命名空間允許不同命名空間的程式看到的檔案結構不同，這樣每個命名空間 中的程式所看到的檔案目錄就被隔離開了。同 chroot 不同，每個命名空間中的容器在 /proc/mounts 的訊息只包含所在命名空間的 mount point。</p>
+<h2 id="uts-namespace"><a href="#uts-namespace" class="headerlink" title="uts namespace"></a>uts namespace</h2><p>UTS(“UNIX Time-sharing System”) 命名空間允許每個容器擁有獨立的 hostname 和 domain name, 使其在網路上可以被視作一個獨立的節點而非主機上的一個程式</p>
+<h2 id="user-namespace"><a href="#user-namespace" class="headerlink" title="user namespace"></a>user namespace</h2><p>每個容器可以有不同的使用者和組 id, 也就是說可以在容器內用容器內部的使用者執行程式而非主機上的使用者。</p>
+<blockquote>
+<p>参考： <a href="http://crosbymichael.com/creating-
+containers-part-1.html" target="_blank" rel="noopener">来自Michael Crosby的Creating containers</a></p>
+</blockquote>
+<h1 id="control-groups"><a href="#control-groups" class="headerlink" title="control groups"></a>control groups</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Linux cgroups 的全称是 Linux Control Groups，它是 Linux 内核的特性，主要作用是限制、记录和隔离进程组（process groups）使用的物理资源（cpu、memory、IO 等）。</p>
+<h2 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a>主要功能</h2><p>cgroups 从设计之初使命就很明确，为进程提供资源控制，它主要的功能包括：</p>
+<ul>
+<li>资源限制：限制进程使用的资源上限，比如最大内存、文件系统缓存使用限制</li>
+<li>优先级控制：不同的组可以有不同的优先级，比如 CPU 使用和磁盘 IO 吞吐</li>
+<li>审计：计算 group 的资源使用情况，可以用来计费</li>
+<li>控制：挂起一组进程，或者重启一组进程</li>
+</ul>
+<p>目前 cgroups 已经成为很多技术的基础，比如 LXC、docker、systemd等。</p>
+<h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><p>cgroups 是用来对进程进行资源管理的，因此 cgroup 需要考虑如何抽象这两种概念：进程和资源，同时如何组织自己的结构。，几个重点概念</p>
+<ul>
+<li>task：任务，对应于系统中运行的一个实体，一般是指进程</li>
+<li>subsystem：子系统，具体的资源控制器（resource class 或者 resource controller），控制某个特定的资源使用。比如 CPU 子系统可以控制 CPU 时间，memory 子系统可以控制内存使用量</li>
+<li>cgroup：控制组，一组任务和子系统的关联关系，表示对这些任务进行怎样的资源管理策略</li>
+<li>hierarchy：层级树，一系列 cgroup 组成的树形结构。每个节点都是一个 cgroup，cgroup 可以有多个子节点，子节点默认会继承父节点的属性。系统中可以有多个 hierarchy</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/posts/4168307710/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+    <div>
+    
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kyyang.io/posts/1509149701/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ky yang">
@@ -418,6 +603,9 @@
     
     
     
+    <div>
+    
+    </div>
 
     
 
@@ -458,7 +646,146 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kyyang.io/posts/2903914866/">
+    <link itemprop="mainEntityOfPage" href="https://kyyang.io/posts/4197081107/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ky yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ky.yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/posts/4197081107/" itemprop="url">nginx性能优化调整</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-23T01:14:09+08:00">
+                2017-07-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/4197081107/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/posts/4197081107/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">worker_processes auto; #默认是1，通常设置为CPU 个数，如不清楚，可设为auto.</span><br><span class="line">worker_connections 10240; #默认值是1024，单个worker进程处理最大连接数.</span><br><span class="line">keepalive_requests 128; #单个持久连接最大发送请求数，默认100</span><br><span class="line">keepalive_timeout 60; #空闲持久连接超时时间</span><br><span class="line">keepalive 32; #upstream持久连接</span><br><span class="line">proxy_http_version 1.1;</span><br><span class="line">proxy_set_header Connection &quot;&quot;;</span><br><span class="line">sendfile on;</span><br></pre></td></tr></table></figure>
+<p>缓存：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location ~* \.(jpg|jpeg|png|gif|ico|js|htm|html)$ &#123; </span><br><span class="line">     expires 10d;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>开启压缩<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">gzip  on;</span><br><span class="line">gzip_min_length 1k;</span><br><span class="line">gzip_buffers   4 16k;</span><br><span class="line">gzip_http_version 1.0;</span><br><span class="line">gzip_comp_level 2;</span><br><span class="line">gzip_types    text/plain application/x-javascript text/css application/xml;</span><br><span class="line">gzip_vary on;</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/posts/4197081107/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+    <div>
+    
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kyyang.io/posts/2903914866/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ky yang">
@@ -576,141 +903,9 @@
     
     
     
-
+    <div>
     
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kyyang.io/posts/4197081107/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ky yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ky.yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/posts/4197081107/" itemprop="url">nginx性能优化调整</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-23T01:14:09+08:00">
-                2017-07-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/posts/4197081107/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/posts/4197081107/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">worker_processes auto; #默认是1，通常设置为CPU 个数，如不清楚，可设为auto.</span><br><span class="line">worker_connections 10240; #默认值是1024，单个worker进程处理最大连接数.</span><br><span class="line">keepalive_requests 128; #单个持久连接最大发送请求数，默认100</span><br><span class="line">keepalive_timeout 60; #空闲持久连接超时时间</span><br><span class="line">keepalive 32; #upstream持久连接</span><br><span class="line">proxy_http_version 1.1;</span><br><span class="line">proxy_set_header Connection &quot;&quot;;</span><br><span class="line">sendfile on;</span><br></pre></td></tr></table></figure>
-<p>缓存：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location ~* \.(jpg|jpeg|png|gif|ico|js|htm|html)$ &#123; </span><br><span class="line">     expires 10d;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>开启压缩<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">gzip  on;</span><br><span class="line">gzip_min_length 1k;</span><br><span class="line">gzip_buffers   4 16k;</span><br><span class="line">gzip_http_version 1.0;</span><br><span class="line">gzip_comp_level 2;</span><br><span class="line">gzip_types    text/plain application/x-javascript text/css application/xml;</span><br><span class="line">gzip_vary on;</span><br></pre></td></tr></table></figure></p>
-<p>关闭access日志打印<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">    access_log off;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>nofile and nproc 设置为合理的值, 修改/etc/security/limits.conf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">myuser	-	nofile	10240</span><br><span class="line">myuser	-	nproc	10240</span><br></pre></td></tr></table></figure></p>
-<p>修改kernel参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">net.ipv4.ip_local_port_range = 32768	60999</span><br><span class="line">net.ipv4.tcp_fin_timeout = 60</span><br><span class="line">net.ipv4.tcp_tw_reuse = 1 #TCP连接重用</span><br><span class="line">net.core.somaxconn = 256 #该项设置等待被Nginx接受的连接的排队大小</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
     </div>
-    
-    
-    
 
     
 
@@ -788,7 +983,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -863,7 +1058,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -1383,5 +1578,7 @@
 
   
 
+  <script type="text/javascript" src="/lib/clipboard/clipboard.js"></script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
 </body>
 </html>

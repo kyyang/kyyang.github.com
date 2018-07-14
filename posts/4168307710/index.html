@@ -83,11 +83,11 @@
 <meta name="keywords" content="docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="docker核心技术笔记">
-<meta property="og:url" content="http://kyyang.io/posts/4168307710/index.html">
+<meta property="og:url" content="https://kyyang.io/posts/4168307710/index.html">
 <meta property="og:site_name" content="ky.yang">
 <meta property="og:description" content="namespace命名空间（namespaces）是 Linux 为我们提供的用于分离进程树、网络接口、挂载点以及进程间通信等资源的方法。 pid namespace不同使用者的程式就是透過 pid 命名空間隔離開的，且不同命名空間中可以有相同 pid net namespace網路隔離是透過 net 命名空間實作的， 每個 net 命名空間有獨立的網路設備, IP 位址, 路由表, /proc/">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-18T07:54:48.763Z">
+<meta property="og:updated_time" content="2018-07-14T06:52:28.475Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="docker核心技术笔记">
 <meta name="twitter:description" content="namespace命名空间（namespaces）是 Linux 为我们提供的用于分离进程树、网络接口、挂载点以及进程间通信等资源的方法。 pid namespace不同使用者的程式就是透過 pid 命名空間隔離開的，且不同命名空間中可以有相同 pid net namespace網路隔離是透過 net 命名空間實作的， 每個 net 命名空間有獨立的網路設備, IP 位址, 路由表, /proc/">
@@ -120,7 +120,7 @@
 
 
 
-  <link rel="canonical" href="http://kyyang.io/posts/4168307710/"/>
+  <link rel="canonical" href="https://kyyang.io/posts/4168307710/"/>
 
 
 
@@ -287,7 +287,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kyyang.io/posts/4168307710/">
+    <link itemprop="mainEntityOfPage" href="https://kyyang.io/posts/4168307710/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ky yang">
@@ -413,6 +413,7 @@ containers-part-1.html" target="_blank" rel="noopener">来自Michael Crosby的Cr
 <li>cgroup：控制组，一组任务和子系统的关联关系，表示对这些任务进行怎样的资源管理策略</li>
 <li>hierarchy：层级树，一系列 cgroup 组成的树形结构。每个节点都是一个 cgroup，cgroup 可以有多个子节点，子节点默认会继承父节点的属性。系统中可以有多个 hierarchy</li>
 </ul>
+<a id="more"></a>
 <h2 id="子资源系统"><a href="#子资源系统" class="headerlink" title="子资源系统"></a>子资源系统</h2><p>Resource Classes or SubSystem<br>目前有下面这些资源子系统：</p>
 <ul>
 <li>Block IO（blkio)：限制块设备（磁盘、SSD、USB 等）的 IO 速率</li>
@@ -447,6 +448,17 @@ containers-part-1.html" target="_blank" rel="noopener">来自Michael Crosby的Cr
     
     
     
+    <div>
+    
+        <div>
+
+        
+-------------the end-------------
+
+    
+</div>
+        
+    </div>
 
     
 
@@ -563,7 +575,7 @@ containers-part-1.html" target="_blank" rel="noopener">来自Michael Crosby的Cr
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -654,7 +666,7 @@ containers-part-1.html" target="_blank" rel="noopener">来自Michael Crosby的Cr
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -1178,5 +1190,7 @@ containers-part-1.html" target="_blank" rel="noopener">来自Michael Crosby的Cr
 
   
 
+  <script type="text/javascript" src="/lib/clipboard/clipboard.js"></script>
+<script type="text/javascript" src="/js/src/custom.js"></script>
 </body>
 </html>
