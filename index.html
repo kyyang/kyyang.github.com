@@ -572,7 +572,17 @@ mv etcd-v3.1.5-linux-amd64/etcd* /usr/local/bin
 
       
         
-          <h2 id="创建kubeconfig文件"><a href="#创建kubeconfig文件" class="headerlink" title="创建kubeconfig文件"></a>创建kubeconfig文件</h2><p>以下操作只需要在master节点上执行，生成的*.kubeconfig文件可以直接拷贝到node节点的/etc/kubernetes目录下</p>
+          <h2 id="安装kubectl工具"><a href="#安装kubectl工具" class="headerlink" title="安装kubectl工具"></a>安装kubectl工具</h2><ul>
+<li>下载安装文件<br>从 <a href="https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.10.md#v1102" target="_blank" rel="noopener">CHANGELOG</a>  页面 下载 client 或 server tarball 文件<br>server 的 tarball kubernetes-server-linux-amd64.tar.gz 已经包含了 client(kubectl) 二进制文件，所以不用单独下载kubernetes-client-linux-amd64.tar.gz文件；</li>
+</ul>
+<pre><code>wget https://dl.k8s.io/v1.10.2/kubernetes-server-linux-amd64.tar.gz
+tar -xzvf kubernetes-server-linux-amd64.tar.gz
+cd kubernetes
+</code></pre><ul>
+<li>将二进制文件拷贝到指定路径</li>
+</ul>
+<pre><code>cp server/bin/kubectl /usr/local/bin/
+</code></pre><h2 id="创建kubeconfig文件"><a href="#创建kubeconfig文件" class="headerlink" title="创建kubeconfig文件"></a>创建kubeconfig文件</h2><p>以下操作只需要在master节点上执行，生成的*.kubeconfig文件可以直接拷贝到node节点的/etc/kubernetes目录下</p>
 <h3 id="创建TLS-Bootstrapping-token"><a href="#创建TLS-Bootstrapping-token" class="headerlink" title="创建TLS Bootstrapping token"></a>创建TLS Bootstrapping token</h3><ul>
 <li>Token auth file<br>Token可以是任意的包含128 bit的字符串，可以使用安全的随机数发生器生成</li>
 </ul>
@@ -1262,178 +1272,6 @@ EOF
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://kyyang.io/posts/1685831839/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ky yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ky.yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/posts/1685831839/" itemprop="url">OutOfMemoryError系列</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-22T23:06:00+08:00">
-                2018-06-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/搬砖系列/" itemprop="url" rel="index">
-                    <span itemprop="name">搬砖系列</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/posts/1685831839/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/posts/1685831839/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li><p><a href="https://blog.csdn.net/renfufei/article/details/76350794" target="_blank" rel="noopener">OutOfMemoryError系列（1）: Java heap space</a></p>
-</li>
-<li><p><a href="http://blog.csdn.net/renfufei/article/details/77585294" target="_blank" rel="noopener">OutOfMemoryError系列（2）: GC overhead limit exceeded</a></p>
-</li>
-<li><p><a href="OutOfMemoryError系列（3）: Permgen space">OutOfMemoryError系列（3）: Permgen space</a></p>
-</li>
-<li><p><a href="http://blog.csdn.net/renfufei/article/details/78061354" target="_blank" rel="noopener">OutOfMemoryError系列（4）: Metaspace</a></p>
-</li>
-<li><p><a href="https://blog.csdn.net/renfufei/article/details/78088553" target="_blank" rel="noopener">OutOfMemoryError系列（5）: Unable to create new native thread</a></p>
-</li>
-<li><p><a href="https://blog.csdn.net/renfufei/article/details/78136638" target="_blank" rel="noopener">OutOfMemoryError系列（6）: Out of swap space？</a></p>
-</li>
-<li><p><a href="https://blog.csdn.net/renfufei/article/details/78170188" target="_blank" rel="noopener">OutOfMemoryError系列（7）: Requested array size exceeds VM limit</a></p>
-</li>
-<li><p><a href="https://blog.csdn.net/renfufei/article/details/78178757" target="_blank" rel="noopener">OutOfMemoryError系列（8）: Kill process or sacrifice child</a></p>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-    <div>
-    
-    </div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://kyyang.io/posts/1685831840/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1557,6 +1395,178 @@ kubectl get serviceaccounts  default -o yaml
 <li>–docker-email 邮箱账号</li>
 </ul>
 </blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+    <div>
+    
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kyyang.io/posts/1685831839/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ky yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ky.yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/posts/1685831839/" itemprop="url">OutOfMemoryError系列</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-22T23:06:00+08:00">
+                2018-06-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/搬砖系列/" itemprop="url" rel="index">
+                    <span itemprop="name">搬砖系列</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/1685831839/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/posts/1685831839/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li><p><a href="https://blog.csdn.net/renfufei/article/details/76350794" target="_blank" rel="noopener">OutOfMemoryError系列（1）: Java heap space</a></p>
+</li>
+<li><p><a href="http://blog.csdn.net/renfufei/article/details/77585294" target="_blank" rel="noopener">OutOfMemoryError系列（2）: GC overhead limit exceeded</a></p>
+</li>
+<li><p><a href="OutOfMemoryError系列（3）: Permgen space">OutOfMemoryError系列（3）: Permgen space</a></p>
+</li>
+<li><p><a href="http://blog.csdn.net/renfufei/article/details/78061354" target="_blank" rel="noopener">OutOfMemoryError系列（4）: Metaspace</a></p>
+</li>
+<li><p><a href="https://blog.csdn.net/renfufei/article/details/78088553" target="_blank" rel="noopener">OutOfMemoryError系列（5）: Unable to create new native thread</a></p>
+</li>
+<li><p><a href="https://blog.csdn.net/renfufei/article/details/78136638" target="_blank" rel="noopener">OutOfMemoryError系列（6）: Out of swap space？</a></p>
+</li>
+<li><p><a href="https://blog.csdn.net/renfufei/article/details/78170188" target="_blank" rel="noopener">OutOfMemoryError系列（7）: Requested array size exceeds VM limit</a></p>
+</li>
+<li><p><a href="https://blog.csdn.net/renfufei/article/details/78178757" target="_blank" rel="noopener">OutOfMemoryError系列（8）: Kill process or sacrifice child</a></p>
+</li>
+</ul>
 
           
         
