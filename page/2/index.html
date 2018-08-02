@@ -288,6 +288,144 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kyyang.io/posts/524561603/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ky yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ky.yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/posts/524561603/" itemprop="url">修改Atom安装插件源为淘宝源</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-18T21:26:09+08:00">
+                2018-06-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/524561603/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/posts/524561603/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="atom安装插件被墙问题"><a href="#atom安装插件被墙问题" class="headerlink" title="atom安装插件被墙问题"></a>atom安装插件被墙问题</h1><p>刚安装的Atom如果用 apm install安装可能会报错，主要原因是atom配置默认使用的源被墙了，可切换到淘宝源来解决</p>
+<p>解决方法：<br>打开 命令行模式</p>
+<pre><code>apm config set registry http://registry.npm.taobao.org
+</code></pre><h1 id="插件安装"><a href="#插件安装" class="headerlink" title="插件安装"></a>插件安装</h1><ul>
+<li>simplified-chinese-menu</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+    <div>
+    
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://kyyang.io/posts/4168307710/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -654,6 +792,164 @@ mysql&gt; FLUSH PRIVILEGES;
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://kyyang.io/posts/4197081107/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ky yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ky.yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/posts/4197081107/" itemprop="url">nginx性能优化调整</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-23T01:14:09+08:00">
+                2017-07-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/posts/4197081107/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/posts/4197081107/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <pre><code>worker_processes auto; #默认是1，通常设置为CPU 个数，如不清楚，可设为auto.
+worker_connections 10240; #默认值是1024，单个worker进程处理最大连接数.
+keepalive_requests 128; #单个持久连接最大发送请求数，默认100
+keepalive_timeout 60; #空闲持久连接超时时间
+keepalive 32; #upstream持久连接
+proxy_http_version 1.1;
+proxy_set_header Connection &quot;&quot;;
+sendfile on;
+</code></pre><p>缓存：</p>
+<pre><code>location ~* \.(jpg|jpeg|png|gif|ico|js|htm|html)$ { 
+     expires 10d;
+}
+</code></pre><p>开启压缩</p>
+<pre><code>gzip  on;
+gzip_min_length 1k;
+gzip_buffers   4 16k;
+gzip_http_version 1.0;
+gzip_comp_level 2;
+gzip_types    text/plain application/x-javascript text/css application/xml;
+gzip_vary on;
+
+</code></pre>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/posts/4197081107/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+    <div>
+    
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://kyyang.io/posts/2903914866/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -806,164 +1102,6 @@ mysql&gt; FLUSH PRIVILEGES;
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://kyyang.io/posts/4197081107/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ky yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ky.yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/posts/4197081107/" itemprop="url">nginx性能优化调整</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-23T01:14:09+08:00">
-                2017-07-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/posts/4197081107/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/posts/4197081107/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <pre><code>worker_processes auto; #默认是1，通常设置为CPU 个数，如不清楚，可设为auto.
-worker_connections 10240; #默认值是1024，单个worker进程处理最大连接数.
-keepalive_requests 128; #单个持久连接最大发送请求数，默认100
-keepalive_timeout 60; #空闲持久连接超时时间
-keepalive 32; #upstream持久连接
-proxy_http_version 1.1;
-proxy_set_header Connection &quot;&quot;;
-sendfile on;
-</code></pre><p>缓存：</p>
-<pre><code>location ~* \.(jpg|jpeg|png|gif|ico|js|htm|html)$ { 
-     expires 10d;
-}
-</code></pre><p>开启压缩</p>
-<pre><code>gzip  on;
-gzip_min_length 1k;
-gzip_buffers   4 16k;
-gzip_http_version 1.0;
-gzip_comp_level 2;
-gzip_types    text/plain application/x-javascript text/css application/xml;
-gzip_vary on;
-
-</code></pre>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/posts/4197081107/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-    <div>
-    
-    </div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1014,7 +1152,7 @@ gzip_vary on;
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1025,7 +1163,7 @@ gzip_vary on;
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1036,7 +1174,7 @@ gzip_vary on;
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1274,7 +1412,7 @@ gzip_vary on;
       infoEle.childNodes.forEach(function(item) {
         item.parentNode.removeChild(item);
       });
-    }
+    }nbhjm
   </script>
 
 
@@ -1617,13 +1755,7 @@ gzip_vary on;
 
   
 
-  
-  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
-  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
-
-
-
-<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 <script type="text/javascript">
   $(function() {
       hljs.initHighlighting();
@@ -1640,6 +1772,9 @@ gzip_vary on;
       });
     });
 </script>
+
+<script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script>  
+<script type="text/javascript" src="/js/src/custom.js"></script>
 
 </body>
 </html>
