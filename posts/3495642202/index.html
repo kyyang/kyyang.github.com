@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="ky.yang">
 <meta property="og:description" content="创建高可用etcd集群kuberntes 系统使用 etcd 存储所有数据，本文档介绍部署一个三节点高可用 etcd 集群的步骤，这三个节点ip分别是：192.168.255.194，192.168.255.195, 192.168.255.196 TLS认证文件需要为 etcd 集群创建加密通信的 TLS 证书，这里复用以前创建的 kubernetes 证书 cp ca.pem /etc/kub">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-02T14:26:47.116Z">
+<meta property="og:updated_time" content="2018-08-12T05:13:53.606Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="搭建kubernetes高可用集群-04部署高可用etcd集群">
 <meta name="twitter:description" content="创建高可用etcd集群kuberntes 系统使用 etcd 存储所有数据，本文档介绍部署一个三节点高可用 etcd 集群的步骤，这三个节点ip分别是：192.168.255.194，192.168.255.195, 192.168.255.196 TLS认证文件需要为 etcd 集群创建加密通信的 TLS 证书，这里复用以前创建的 kubernetes 证书 cp ca.pem /etc/kub">
@@ -446,7 +446,7 @@ EOF
 #!/bin/bash
 
 source /data/k8s/script/config/env
-source /data/k8s/script/config/etcd.conf
+source $workdir/config/etcd.conf
 
 name=&quot;etcd&quot;
 pidfile=&quot;$workdir/run/$name.pid&quot;
@@ -456,13 +456,13 @@ test -d $workdir/data || mkdir -p $workdir/data
 test -d $workdir/run || mkdir -p $workdir/run
 test -d $workdir/log/$name || mkdir -p $workdir/log/$name
 
-disaple_help(){
+display_help(){
   echo &quot;Usage: `basename $0` (start|stop)&quot;
   exit 0
 }
 
 if [ $# -ne 1 ];then
-  disaple_help
+  display_help
 fi
 
 source $workdir/pid_utils/pid_util.sh
@@ -483,7 +483,7 @@ case $1 in
           --advertise-client-urls ${ETCD_ADVERTISE_CLIENT_URLS} \
           --initial-cluster-token ${ETCD_INITIAL_CLUSTER_TOKEN} \
           --initial-cluster ${ETCD_CLUSTER_URLS} \
-                --initial-cluster-state new \
+      --initial-cluster-state new \
           --data-dir=${ETCD_DATA_DIR} \
           1&gt;&gt;$workdir/log/$name/$name.log 2&gt;&amp;1 &amp;
 
@@ -502,9 +502,10 @@ case $1 in
     kill_and_wait $pidfile
     ;;
   *)
-    disaple_help
+    display_help
     ;;
 esac
+EOF
 </code></pre><blockquote>
 <p>对应节点需修改变量相关的IP，及节点名称,在其它节点上做同样操作部署，注意需修改相关IP及节点名称</p>
 <ul>
@@ -579,6 +580,10 @@ cluster is healthy
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/2196744268/" rel="prev" title="搭建kubernetes高可用集群-05部署apiserver节点">
+                搭建kubernetes高可用集群-05部署apiserver节点 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -658,7 +663,7 @@ cluster is healthy
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -669,7 +674,7 @@ cluster is healthy
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -680,7 +685,7 @@ cluster is healthy
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

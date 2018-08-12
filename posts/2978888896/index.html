@@ -70,7 +70,7 @@
 
 
 
-  <meta name="keywords" content="web,nodejs," />
+  <meta name="keywords" content="k8s,安装k8s,安装LB," />
 
 
 
@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="安装 Node.js 的最佳方式是使用 nvm。安装nvm: curl https://raw.github.com/creationix/nvm/master/install.sh | sh  or wget -qO- https://raw.github.com/creationix/nvm/master/install.sh | sh  安装完成nvm后，重新启动终端，使用以下命令安装最新版">
-<meta name="keywords" content="web,nodejs">
+<meta name="description" content="LB节点安装部署API高可用集群 nginx及keepalived组件安装nginx、keepalivedyum -y install gcc gcc-c++ make automake autoconf libtool pcre pcre-devel zlib zlib-devel openssl openssl-devel yum -y install keepalived useradd n">
+<meta name="keywords" content="k8s,安装k8s,安装LB">
 <meta property="og:type" content="article">
-<meta property="og:title" content="安装 Node JS">
-<meta property="og:url" content="https://kyyang.io/posts/2903914866/index.html">
+<meta property="og:title" content="搭建kubernetes高可用集群-06部署LB高可用集群">
+<meta property="og:url" content="https://kyyang.io/posts/2978888896/index.html">
 <meta property="og:site_name" content="ky.yang">
-<meta property="og:description" content="安装 Node.js 的最佳方式是使用 nvm。安装nvm: curl https://raw.github.com/creationix/nvm/master/install.sh | sh  or wget -qO- https://raw.github.com/creationix/nvm/master/install.sh | sh  安装完成nvm后，重新启动终端，使用以下命令安装最新版">
+<meta property="og:description" content="LB节点安装部署API高可用集群 nginx及keepalived组件安装nginx、keepalivedyum -y install gcc gcc-c++ make automake autoconf libtool pcre pcre-devel zlib zlib-devel openssl openssl-devel yum -y install keepalived useradd n">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-30T15:28:07.653Z">
+<meta property="og:updated_time" content="2018-08-12T05:31:32.617Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="安装 Node JS">
-<meta name="twitter:description" content="安装 Node.js 的最佳方式是使用 nvm。安装nvm: curl https://raw.github.com/creationix/nvm/master/install.sh | sh  or wget -qO- https://raw.github.com/creationix/nvm/master/install.sh | sh  安装完成nvm后，重新启动终端，使用以下命令安装最新版">
+<meta name="twitter:title" content="搭建kubernetes高可用集群-06部署LB高可用集群">
+<meta name="twitter:description" content="LB节点安装部署API高可用集群 nginx及keepalived组件安装nginx、keepalivedyum -y install gcc gcc-c++ make automake autoconf libtool pcre pcre-devel zlib zlib-devel openssl openssl-devel yum -y install keepalived useradd n">
 
 
 
@@ -122,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://kyyang.io/posts/2903914866/"/>
+  <link rel="canonical" href="https://kyyang.io/posts/2978888896/"/>
 
 
 
 
 
-  <title>安装 Node JS | ky.yang</title>
+  <title>搭建kubernetes高可用集群-06部署LB高可用集群 | ky.yang</title>
   
 
 
@@ -289,7 +289,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://kyyang.io/posts/2903914866/">
+    <link itemprop="mainEntityOfPage" href="https://kyyang.io/posts/2978888896/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ky yang">
@@ -306,7 +306,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">安装 Node JS</h1>
+          <h1 class="post-title" itemprop="name headline">搭建kubernetes高可用集群-06部署LB高可用集群</h1>
         
 
         <div class="post-meta">
@@ -318,8 +318,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-23T01:14:09+08:00">
-                2017-07-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-12T14:06:00+08:00">
+                2018-08-12
               </time>
             
 
@@ -341,8 +341,19 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/前端/" itemprop="url" rel="index">
-                    <span itemprop="name">前端</span>
+                  <a href="/categories/kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/kubernetes/LB/" itemprop="url" rel="index">
+                    <span itemprop="name">LB</span>
                   </a>
                 </span>
 
@@ -359,8 +370,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/posts/2903914866/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/posts/2903914866/" itemprop="commentCount"></span>
+                <a href="/posts/2978888896/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/posts/2978888896/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -388,18 +399,342 @@
       
 
       
-        <p>安装 Node.js 的最佳方式是使用 nvm。<br>安装nvm:</p>
-<pre><code>curl https://raw.github.com/creationix/nvm/master/install.sh | sh 
-</code></pre><p>or</p>
-<pre><code>wget -qO- https://raw.github.com/creationix/nvm/master/install.sh | sh 
-</code></pre><p>安装完成nvm后，重新启动终端，使用以下命令安装最新版nodejs</p>
-<pre><code>nvm install stable 
-</code></pre><p>验证安装：</p>
-<pre><code>node -v
-</code></pre><blockquote>
-<p>可以看到有输出nodejs的版本号，本示例输出的是：v8.1.4</p>
-</blockquote>
+        <h2 id="LB节点安装"><a href="#LB节点安装" class="headerlink" title="LB节点安装"></a>LB节点安装</h2><h3 id="部署API高可用集群-nginx及keepalived组件"><a href="#部署API高可用集群-nginx及keepalived组件" class="headerlink" title="部署API高可用集群 nginx及keepalived组件"></a>部署API高可用集群 nginx及keepalived组件</h3><h4 id="安装nginx、keepalived"><a href="#安装nginx、keepalived" class="headerlink" title="安装nginx、keepalived"></a>安装nginx、keepalived</h4><pre><code>yum -y install gcc gcc-c++ make automake autoconf libtool pcre pcre-devel zlib zlib-devel openssl openssl-devel
+yum -y install keepalived
+useradd nginx -s /sbin/nologin
+tar xvf nginx-1.14.0.tar.gz
+cd nginx-1.14.0
+./configure --prefix=/usr/local/nginx \
+--user=nginx --group=nginx \
+--with-http_ssl_module \
+--with-http_realip_module \
+--with-http_addition_module \
+--with-http_sub_module  \
+--with-http_gunzip_module \
+--with-http_gzip_static_module \
+--with-http_stub_status_module  \
+--with-stream --with-stream_ssl_module
+make
+make install
+</code></pre><a id="more"></a>
+<h4 id="配置nginx"><a href="#配置nginx" class="headerlink" title="配置nginx"></a>配置nginx</h4><pre><code>##生成nginx主配置文件
+cat &gt; /data/k8s/script/config/nginx.conf &lt;&lt; EOF
+user  nginx;
+worker_processes  auto;
 
+pid        logs/nginx.pid;
+
+events {
+    worker_connections  10240;
+}
+
+stream {
+    upstream apiservers_https {
+        hash $remote_addr consistent;
+        server 192.168.255.190:6443;
+        server 192.168.255.191:6443;
+        server 192.168.255.192:6443;
+    }
+    upstream apiservers_http {
+        hash $remote_addr consistent;
+        server 192.168.255.190:8080;
+        server 192.168.255.191:8080;
+        server 192.168.255.192:8080;
+   }
+   server {
+      listen 6443;
+      proxy_pass apiservers_https;
+   }
+   server {
+     listen 8080;
+     proxy_pass apiservers_http;
+  }
+}
+EOF
+</code></pre><h4 id="配置keepalived"><a href="#配置keepalived" class="headerlink" title="配置keepalived"></a>配置keepalived</h4><pre><code>## 创建keepalived.conf配置文件
+cat &gt; /data/k8s/script/config/keepalived.conf &lt;&lt; EOF
+! Configuration File for keepalived
+
+global_defs {
+   router_id LVS_DEVEL          #不同keepalived要不同
+}
+
+# 设置检查nginx存活脚本
+vrrp_script chk_nginx {
+     script &quot;/data/k8s/script/nginx_check.sh&quot;   
+     interval 2
+     weight -20
+}
+
+vrrp_instance VI_1 {
+    state MASTER   #master节点，备节点为BACKUP
+    interface ens33  #网卡接口名称
+    virtual_router_id 51  #设置VRID，相同的VRID为一个组，他将决定多播的MAC地址
+    mcast_src_ip 192.168.255.199 #发送多播数据包时的源IP地址，相当于heartbeat的心跳端口
+    #nopreempt  #是否抢占资源，只需在备节点配置
+    priority 100 #设置本节点的优先级，优先级高的为master
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass 1111
+    }
+
+    track_script {
+       chk_nginx
+    }
+    #设置VIP
+    virtual_ipaddress {
+        192.168.255.197
+    }
+}
+EOF
+</code></pre><h4 id="创建check-nginx脚本"><a href="#创建check-nginx脚本" class="headerlink" title="创建check nginx脚本"></a>创建check nginx脚本</h4><pre><code>cat &gt; /data/k8s/script/nginx_check.sh &lt;&lt; EOF
+#!/bin/bash
+
+source /data/k8s/script/config/env
+
+cd $workdir  
+A=`ps -C nginx --no-header |wc -l`
+if [ $A -eq 0 ];then
+    #/usr/local/nginx/sbin/nginx
+    sh nginx_ctl start
+    sleep 2
+    if [ `ps -C nginx --no-header |wc -l` -eq 0 ];then
+          killall keepalived
+    fi
+fi
+EOF
+</code></pre><h4 id="创建-nginx启动脚本"><a href="#创建-nginx启动脚本" class="headerlink" title="创建 nginx启动脚本"></a>创建 nginx启动脚本</h4><pre><code>cat &gt; /data/k8s/script/nginx_ctl &lt;&lt; EOF
+#!/bin/bash
+
+source /data/k8s/script/config/env
+nginxdir=&quot;/usr/local/nginx&quot;
+name=&quot;nginx&quot;
+pidfile=&quot;$nginxdir/logs/$name.pid&quot;
+conf_file=&quot;$workdir/config/nginx.conf&quot;
+
+test -d $workdir/log/$name || mkdir -p $workdir/log/$name
+
+display_help(){
+  echo &quot;Usage: `basename $0` (start|stop)&quot;
+  exit 0
+}
+
+if [ $# -ne 1 ];then
+  display_help
+fi
+
+source $workdir/pid_utils/pid_util.sh
+case $1 in
+  start)
+      exec $nginxdir/sbin/$name -c $conf_file \
+             1&gt;&gt;$workdir/log/$name/$name.log 2&gt;&amp;1 &amp;
+
+      for try in $(seq 0 9);do
+            sleep $try
+            echo &quot;wait $name pid (try: $try)&quot;
+            pid=$(lsof -t $nginxdir/sbin/$name)
+            if [ -n &quot;$pid&quot; ]; then
+                echo &quot;$name pid: $pid is running...&quot;
+                break;
+            fi
+       done
+  ;;
+
+  stop)
+    kill_and_wait $pidfile
+    ;;
+  *)
+    display_help
+    ;;
+esac
+EOF
+</code></pre><h4 id="创建keepalived启动脚本"><a href="#创建keepalived启动脚本" class="headerlink" title="创建keepalived启动脚本"></a>创建keepalived启动脚本</h4><pre><code>cat &gt; /data/k8s/script/keepalived_ctl &lt;&lt; EOF
+#!/bin/bash
+
+source /data/k8s/script/config/env
+
+name=&quot;keepalived&quot;
+#PIDFile=/var/run/keepalived.pid
+pidfile=&quot;$workdir/run/$name.pid&quot;
+test -d $workdir/run || mkdir -p $workdir/run
+test -d $workdir/log/$name || mkdir -p $workdir/log/$name
+
+display_help(){
+  echo &quot;Usage: `basename $0` (start|stop)&quot;
+  exit 0
+}
+
+if [ $# -ne 1 ];then
+  display_help
+fi
+
+KEEPALIVED_OPTIONS=&quot;-l --use-file=$workdir/config/keepalived.conf --pid=$pidfile&quot;
+
+source $workdir/pid_utils/pid_util.sh
+case $1 in
+  start)
+      exec /usr/sbin/keepalived $KEEPALIVED_OPTIONS \
+             1&gt;&gt;$workdir/log/$name/$name.log 2&gt;&amp;1 &amp;
+
+      for try in $(seq 0 9);do
+            sleep $try
+            echo &quot;wait $name pid (try: $try)&quot;
+            pid=$(lsof -t /usr/sbin/keepalived|head -1)
+            if [ -n &quot;$pid&quot; ]; then
+                #echo &quot;$pid&quot; &gt; $pidfile
+                run_pid=`cat $pidfile`
+        if [ &quot;$pid&quot; == &quot;$run_pid&quot; ];then
+                    echo &quot;$name pid: $pid is running...&quot;
+                fi
+                break;
+            fi
+       done
+  ;;
+
+  stop)
+    kill_and_wait $pidfile
+    ;;
+  *)
+    display_help
+    ;;
+esac
+EOF
+</code></pre><h4 id="启动keepalived及nginx"><a href="#启动keepalived及nginx" class="headerlink" title="启动keepalived及nginx"></a>启动keepalived及nginx</h4><pre><code>chmod +x /data/k8s/script/keepalived_ctl
+chmod +x /data/k8s/script/nginx*
+sh keepalived_ctl start
+</code></pre><blockquote>
+<p>在LB 备节点上面操作参考上面步骤，只是要注意keepalived.conf配置文件里的部份内容<br>注意： 启动 keepalived后会自动拉起nginx服务</p>
+</blockquote>
+<h3 id="下载及部署kube-controller-manager-kube-scheduler组件"><a href="#下载及部署kube-controller-manager-kube-scheduler组件" class="headerlink" title="下载及部署kube-controller-manager,kube-scheduler组件"></a>下载及部署kube-controller-manager,kube-scheduler组件</h3><h4 id="复制执行文件到-usr-loca-bin目录"><a href="#复制执行文件到-usr-loca-bin目录" class="headerlink" title="复制执行文件到 /usr/loca/bin目录"></a>复制执行文件到 /usr/loca/bin目录</h4><pre><code>cp -v kube-controller-manager /usr/local/bin/
+cp -v kube-scheduler /usr/local/bin/
+chmod +x /usr/local/bin/kube-*
+
+</code></pre><h4 id="创建kube-controller-manager-ctl启动脚本"><a href="#创建kube-controller-manager-ctl启动脚本" class="headerlink" title="创建kube-controller-manager_ctl启动脚本"></a>创建kube-controller-manager_ctl启动脚本</h4><pre><code>cat &gt; /data/k8s/script/kube-controller-manager_ctl &lt;&lt; EOF
+#!/bin/bash
+
+source /data/k8s/script/config/env
+source $workdir/config/kube-config
+
+name=&quot;kube-controller-manager&quot;
+pidfile=&quot;$workdir/run/$name.pid&quot;
+
+test -d $workdir/run || mkdir -p $workdir/run
+test -d $workdir/log/$name || mkdir -p $workdir/log/$name
+
+display_help(){
+  echo &quot;Usage: `basename $0` (start|stop)&quot;
+  exit 0
+}
+
+if [ $# -ne 1 ];then
+  display_help
+fi
+
+KUBE_CONTROLLER_MANAGER_ARGS=&quot;--address=127.0.0.1 \         
+   --service-cluster-ip-range=10.254.0.0/16   \
+   --cluster-name=kubernetes    \
+   --cluster-signing-cert-file=/etc/kubernetes/ssl/ca.pem   \
+   --cluster-signing-key-file=/etc/kubernetes/ssl/ca-key.pem \
+   --service-account-private-key-file=/etc/kubernetes/ssl/ca-key.pem \
+   --root-ca-file=/etc/kubernetes/ssl/ca.pem \
+   --leader-elect=true&quot;
+
+
+source $workdir/pid_utils/pid_util.sh
+case $1 in
+  start)
+      exec $bin_dir/$name \
+             $KUBE_LOGTOSTDERR \
+             $KUBE_LOG_LEVEL \
+             $KUBE_MASTER \
+             $KUBE_CONTROLLER_MANAGER_ARGS \
+             1&gt;&gt;$workdir/log/$name/$name.log 2&gt;&amp;1 &amp;
+
+      for try in $(seq 0 9);do
+            sleep $try
+            echo &quot;wait $name pid (try: $try)&quot;
+            pid=$(lsof -t $bin_dir/$name)
+            if [ -n &quot;$pid&quot; ]; then
+                echo &quot;$pid&quot; &gt; $pidfile
+                echo &quot;$name pid: $pid is running...&quot;
+                break;
+            fi
+       done
+  ;;
+
+  stop)
+    kill_and_wait $pidfile
+    ;;
+  *)
+    display_help
+    ;;
+esac
+EOF
+</code></pre><h4 id="创建kube-scheduler-ctl启动脚本"><a href="#创建kube-scheduler-ctl启动脚本" class="headerlink" title="创建kube-scheduler_ctl启动脚本"></a>创建kube-scheduler_ctl启动脚本</h4><pre><code>cat &gt; /data/k8s/script/kube-scheduler_ctl &lt;&lt; EOF
+#!/bin/bash
+
+name=&quot;kube-scheduler&quot;
+source /data/k8s/script/config/env
+source $workdir/config/kube-config
+
+pidfile=&quot;$workdir/run/$name.pid&quot;
+
+test -d $workdir/run || mkdir -p $workdir/run
+test -d $workdir/log/$name || mkdir -p $workdir/log/$name
+
+display_help(){
+  echo &quot;Usage: `basename $0` (start|stop)&quot;
+  exit 0
+}
+
+if [ $# -ne 1 ];then
+  display_help
+fi
+
+KUBE_SCHEDULER_ARGS=&quot;--leader-elect=true --address=127.0.0.1&quot;
+
+source $workdir/pid_utils/pid_util.sh
+case $1 in
+  start)
+      exec $bin_dir/$name \
+             $KUBE_LOGTOSTDERR \
+             $KUBE_LOG_LEVEL \
+             $KUBE_MASTER \
+             $KUBE_SCHEDULER_ARGS \
+             1&gt;&gt;$workdir/log/$name/$name.log 2&gt;&amp;1 &amp;
+
+      for try in $(seq 0 9);do
+            sleep $try
+            echo &quot;wait $name pid (try: $try)&quot;
+            pid=$(lsof -t $bin_dir/$name)
+            if [ -n &quot;$pid&quot; ]; then
+                echo &quot;$pid&quot; &gt; $pidfile
+                echo &quot;$name pid: $pid is running...&quot;
+                break;
+            fi
+       done
+  ;;
+
+  stop)
+    kill_and_wait $pidfile
+    ;;
+  *)
+    display_help
+    ;;
+esac
+EOF
+</code></pre><h4 id="启动kube-scheduler及kube-controller-manager组件"><a href="#启动kube-scheduler及kube-controller-manager组件" class="headerlink" title="启动kube-scheduler及kube-controller-manager组件"></a>启动kube-scheduler及kube-controller-manager组件</h4><pre><code>chmod +x  /data/k8s/script/kube-*
+sh kube-controller-manager_ctl start
+sh kube-scheduler_ctl  start
+</code></pre><h3 id="验证安装"><a href="#验证安装" class="headerlink" title="验证安装"></a>验证安装</h3><pre><code># kubectl get componentstatuses
+NAME                 STATUS      MESSAGE                                                                                        ERROR
+scheduler            Unhealthy   Get http://127.0.0.1:10251/healthz: dial tcp 127.0.0.1:10251: getsockopt: connection refused   
+controller-manager   Unhealthy   Get http://127.0.0.1:10252/healthz: dial tcp 127.0.0.1:10252: getsockopt: connection refused   
+etcd-1               Healthy     {&quot;health&quot;: &quot;true&quot;}                                                                             
+etcd-0               Healthy     {&quot;health&quot;: &quot;true&quot;}                                                                             
+etcd-2               Healthy     {&quot;health&quot;: &quot;true&quot;}   
+</code></pre>
       
     </div>
     
@@ -427,9 +762,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/web/" rel="tag"># web</a>
+            <a href="/tags/k8s/" rel="tag"># k8s</a>
           
-            <a href="/tags/nodejs/" rel="tag"># nodejs</a>
+            <a href="/tags/安装k8s/" rel="tag"># 安装k8s</a>
+          
+            <a href="/tags/安装LB/" rel="tag"># 安装LB</a>
           
         </div>
       
@@ -442,15 +779,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/posts/2196744268/" rel="next" title="搭建kubernetes高可用集群-05部署apiserver节点">
+                <i class="fa fa-chevron-left"></i> 搭建kubernetes高可用集群-05部署apiserver节点
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/posts/4197081107/" rel="prev" title="nginx性能优化调整">
-                nginx性能优化调整 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -505,8 +842,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -582,6 +928,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#LB节点安装"><span class="nav-number">1.</span> <span class="nav-text">LB节点安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#部署API高可用集群-nginx及keepalived组件"><span class="nav-number">1.1.</span> <span class="nav-text">部署API高可用集群 nginx及keepalived组件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装nginx、keepalived"><span class="nav-number">1.1.1.</span> <span class="nav-text">安装nginx、keepalived</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置nginx"><span class="nav-number">1.1.2.</span> <span class="nav-text">配置nginx</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置keepalived"><span class="nav-number">1.1.3.</span> <span class="nav-text">配置keepalived</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建check-nginx脚本"><span class="nav-number">1.1.4.</span> <span class="nav-text">创建check nginx脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建-nginx启动脚本"><span class="nav-number">1.1.5.</span> <span class="nav-text">创建 nginx启动脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建keepalived启动脚本"><span class="nav-number">1.1.6.</span> <span class="nav-text">创建keepalived启动脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动keepalived及nginx"><span class="nav-number">1.1.7.</span> <span class="nav-text">启动keepalived及nginx</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下载及部署kube-controller-manager-kube-scheduler组件"><span class="nav-number">1.2.</span> <span class="nav-text">下载及部署kube-controller-manager,kube-scheduler组件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#复制执行文件到-usr-loca-bin目录"><span class="nav-number">1.2.1.</span> <span class="nav-text">复制执行文件到 /usr/loca/bin目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建kube-controller-manager-ctl启动脚本"><span class="nav-number">1.2.2.</span> <span class="nav-text">创建kube-controller-manager_ctl启动脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建kube-scheduler-ctl启动脚本"><span class="nav-number">1.2.3.</span> <span class="nav-text">创建kube-scheduler_ctl启动脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动kube-scheduler及kube-controller-manager组件"><span class="nav-number">1.2.4.</span> <span class="nav-text">启动kube-scheduler及kube-controller-manager组件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证安装"><span class="nav-number">1.3.</span> <span class="nav-text">验证安装</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
