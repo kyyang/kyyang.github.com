@@ -135,7 +135,7 @@
       <title>搭建kubernetes高可用集群-01准备环境</title>
       <link href="/posts/1711085942/"/>
       <url>/posts/1711085942/</url>
-      <content type="html"><![CDATA[<h2 id="准备环境"><a href="#准备环境" class="headerlink" title="准备环境"></a>准备环境</h2><h3 id="部署架构图"><a href="#部署架构图" class="headerlink" title="部署架构图"></a>部署架构图</h3><p><img src="/images/kubernetes-arch.png" alt="kuberntes arch"></p><h3 id="主机分配"><a href="#主机分配" class="headerlink" title="主机分配"></a>主机分配</h3><table><thead><tr><th>num</th><th>hostname</th><th>role</th><th>ip addr</th></tr></thead><tbody><tr><td>1</td><td>etcd1</td><td>etcd</td><td>192.168.255.194</td></tr><tr><td>2</td><td>etcd2</td><td>etcd</td><td>192.168.255.195</td></tr><tr><td>3</td><td>etcd3</td><td>etcd</td><td>192.168.255.196</td></tr><tr><td>4</td><td>apiserver1</td><td>api srever</td><td>192.168.255.190</td></tr><tr><td>5</td><td>apiserver2</td><td>api srever</td><td>192.168.255.191</td></tr><tr><td>6</td><td>apiserver3</td><td>api srever</td><td>192.168.255.192</td></tr><tr><td>7</td><td>node1</td><td>node</td><td>192.168.255.200</td></tr><tr><td>8</td><td>node2</td><td>node</td><td>192.168.255.201</td></tr><tr><td>9</td><td>node3</td><td>node</td><td>192.168.255.202</td></tr><tr><td>10</td><td>master</td><td>LB</td><td>192.168.255.199</td></tr><tr><td>11</td><td>master_backup</td><td>LB</td><td>192.168.255.198</td></tr><tr><td>12</td><td>LBvip</td><td>vip</td><td>192.168.255.197</td></tr></tbody></table><blockquote><p>ETCD节点3台，kube-apiserver节点3台, node节点3台, LB两台主备，VIP一个</p></blockquote><blockquote><p>controller manager和 scheduler和LB一起部署，所有业务进程统一使用monit进行维护；</p></blockquote><a id="more"></a><h3 id="主机基本配置"><a href="#主机基本配置" class="headerlink" title="主机基本配置"></a>主机基本配置</h3><h4 id="在所有机器禁用selinux"><a href="#在所有机器禁用selinux" class="headerlink" title="在所有机器禁用selinux"></a>在所有机器禁用selinux</h4><pre><code>setenforce 0sed  -i &#39;s/SELINUX=enforcing/SELINUX=disabled/g&#39; /etc/selinux/config</code></pre><h4 id="禁用防火墙"><a href="#禁用防火墙" class="headerlink" title="禁用防火墙"></a>禁用防火墙</h4><pre><code> systemctl stop firewalld systemctl disable firewalld systemctl satus firewalld</code></pre><h4 id="所有节点设置以下内核参数"><a href="#所有节点设置以下内核参数" class="headerlink" title="所有节点设置以下内核参数"></a>所有节点设置以下内核参数</h4><pre><code>cat  &gt; /etc/sysctl.d/k8s.conf &lt;&lt; EOFnet.ipv4.ip_forward = 1net.bridge.bridge-nf-call-ip6tables = 1net.bridge.bridge-nf-call-iptables = 1EOFsysctl  -p /etc/sysctl.d/k8s.conf</code></pre><h3 id="安装目录规划"><a href="#安装目录规划" class="headerlink" title="安装目录规划"></a>安装目录规划</h3><table><thead><tr><th>num</th><th>目录路径</th><th>用途</th></tr></thead><tbody><tr><td>1</td><td>/data/k8s/script</td><td>执行脚本主目录</td></tr><tr><td>2</td><td>/data/k8s/组件</td><td>各组件目录</td></tr><tr><td>3</td><td>/data/k8s/script/config</td><td>公共配置文件目录</td></tr><tr><td>4</td><td>/data/k8s/script/pid_utils</td><td>PID进程工具</td></tr><tr><td>5</td><td>/data/lib/docker</td><td>docker数据目录</td></tr><tr><td>6</td><td>/etc/kubernetes/ssl</td><td>证书文件存放目录</td></tr></tbody></table>]]></content>
+      <content type="html"><![CDATA[<h2 id="准备环境"><a href="#准备环境" class="headerlink" title="准备环境"></a>准备环境</h2><h3 id="部署架构图"><a href="#部署架构图" class="headerlink" title="部署架构图"></a>部署架构图</h3><p><img src="/images/kubernetes-arch.png" alt="kuberntes arch"></p><h3 id="主机分配"><a href="#主机分配" class="headerlink" title="主机分配"></a>主机分配</h3><table><thead><tr><th>num</th><th>hostname</th><th>role</th><th>ip addr</th></tr></thead><tbody><tr><td>1</td><td>etcd1</td><td>etcd</td><td>192.168.255.194</td></tr><tr><td>2</td><td>etcd2</td><td>etcd</td><td>192.168.255.195</td></tr><tr><td>3</td><td>etcd3</td><td>etcd</td><td>192.168.255.196</td></tr><tr><td>4</td><td>apiserver1</td><td>api srever</td><td>192.168.255.190</td></tr><tr><td>5</td><td>apiserver2</td><td>api srever</td><td>192.168.255.191</td></tr><tr><td>6</td><td>apiserver3</td><td>api srever</td><td>192.168.255.192</td></tr><tr><td>7</td><td>node1</td><td>node</td><td>192.168.255.200</td></tr><tr><td>8</td><td>node2</td><td>node</td><td>192.168.255.201</td></tr><tr><td>9</td><td>node3</td><td>node</td><td>192.168.255.202</td></tr><tr><td>10</td><td>master</td><td>LB</td><td>192.168.255.199</td></tr><tr><td>11</td><td>master_backup</td><td>LB</td><td>192.168.255.198</td></tr><tr><td>12</td><td>LBvip</td><td>vip</td><td>192.168.255.197</td></tr></tbody></table><blockquote><p>ETCD节点3台，kube-apiserver节点3台, node节点3台, LB两台主备，VIP一个</p></blockquote><blockquote><p>controller manager和 scheduler和LB一起部署，所有业务进程统一使用monit进行维护；</p></blockquote><a id="more"></a><h3 id="主机基本配置"><a href="#主机基本配置" class="headerlink" title="主机基本配置"></a>主机基本配置</h3><h4 id="在所有机器禁用selinux"><a href="#在所有机器禁用selinux" class="headerlink" title="在所有机器禁用selinux"></a>在所有机器禁用selinux</h4><pre><code>setenforce 0sed  -i &#39;s/SELINUX=enforcing/SELINUX=disabled/g&#39; /etc/selinux/config</code></pre><h4 id="禁用防火墙"><a href="#禁用防火墙" class="headerlink" title="禁用防火墙"></a>禁用防火墙</h4><pre><code> systemctl stop firewalld  systemctl disable firewalld systemctl satus firewalld</code></pre><h4 id="禁用SWAP"><a href="#禁用SWAP" class="headerlink" title="禁用SWAP"></a>禁用SWAP</h4><pre><code>swapoff -a## 修改/etc/fstab, 注释swap行，如下：# /etc/fstab# Created by anaconda on Sun Apr 22 03:04:41 2018# Accessible filesystems, by reference, are maintained under &#39;/dev/disk&#39;# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info#/dev/mapper/centos-root  /                       xfs     defaults        0 0UUID=eb8db29a-d416-49e5-8811-320dba32b88e /boot  xfs     defaults        0 0#/dev/mapper/centos-swap swap                    swap    defaults        0 0</code></pre><h4 id="所有节点设置以下内核参数"><a href="#所有节点设置以下内核参数" class="headerlink" title="所有节点设置以下内核参数"></a>所有节点设置以下内核参数</h4><pre><code>cat  &gt; /etc/sysctl.d/k8s.conf &lt;&lt; EOFnet.ipv4.ip_forward = 1net.bridge.bridge-nf-call-ip6tables = 1net.bridge.bridge-nf-call-iptables = 1EOFsysctl  -p /etc/sysctl.d/k8s.conf</code></pre><h3 id="安装目录规划"><a href="#安装目录规划" class="headerlink" title="安装目录规划"></a>安装目录规划</h3><table><thead><tr><th>num</th><th>目录路径</th><th>用途</th></tr></thead><tbody><tr><td>1</td><td>/data/k8s/script</td><td>执行脚本主目录</td></tr><tr><td>2</td><td>/data/k8s/组件</td><td>各组件目录</td></tr><tr><td>3</td><td>/data/k8s/script/config</td><td>公共配置文件目录</td></tr><tr><td>4</td><td>/data/k8s/script/pid_utils</td><td>PID进程工具</td></tr><tr><td>5</td><td>/data/lib/docker</td><td>docker数据目录</td></tr><tr><td>6</td><td>/etc/kubernetes/ssl</td><td>证书文件存放目录</td></tr></tbody></table>]]></content>
       
       <categories>
           
@@ -149,6 +149,29 @@
             <tag> docker </tag>
             
             <tag> k8s </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>k8s v1.8.13 拉取私有镜像仓库镜像失败问题处理笔记</title>
+      <link href="/posts/1685831840/"/>
+      <url>/posts/1685831840/</url>
+      <content type="html"><![CDATA[<h3 id="报错日志"><a href="#报错日志" class="headerlink" title="报错日志"></a>报错日志</h3><pre><code>Failed to pull image  &quot;image-url/web/nginx&quot;: rpc error : code = Unknown desc = error response form daemon: pull access denied for image-url/web/nginx , repository does not exist or may require &#39;docker login&#39;</code></pre><h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><pre><code>#创建secretkubectl create secret docker-registry SECRET-NAME --docker-server=registry.kyloverose.com  --docker-username=web --docker-password=you-password --docker-email=kyvicp@gmail.com#配置默认规则,将密钥设置到默认账号中kubectl patch serviceaccount default -p &#39;{&quot;imagePullSecrets&quot;: [{&quot;name&quot;: &quot;SECRET-NAME&quot;}]}#查看默认账号配置kubectl get serviceaccounts  default -o yaml</code></pre><blockquote><p>说明：</p><ul><li>secret名： SECRET-NAME</li><li>–docker-server 为docker login时的域名</li><li>–docker-username 是登录镜仓库的用户名</li><li>–docker-password 登录镜仓库的密码</li><li>–docker-email 邮箱账号</li></ul></blockquote>]]></content>
+      
+      <categories>
+          
+          <category> kubernetes </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> docker </tag>
+            
+            <tag> harbor </tag>
             
         </tags>
       
@@ -199,29 +222,6 @@
             <tag> 内存溢出 </tag>
             
             <tag> OutOfMemoryError </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    <entry>
-      <title>k8s v1.8.13 拉取私有镜像仓库镜像失败问题处理笔记</title>
-      <link href="/posts/1685831840/"/>
-      <url>/posts/1685831840/</url>
-      <content type="html"><![CDATA[<h3 id="报错日志"><a href="#报错日志" class="headerlink" title="报错日志"></a>报错日志</h3><pre><code>Failed to pull image  &quot;image-url/web/nginx&quot;: rpc error : code = Unknown desc = error response form daemon: pull access denied for image-url/web/nginx , repository does not exist or may require &#39;docker login&#39;</code></pre><h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><pre><code>#创建secretkubectl create secret docker-registry SECRET-NAME --docker-server=registry.kyloverose.com  --docker-username=web --docker-password=you-password --docker-email=kyvicp@gmail.com#配置默认规则,将密钥设置到默认账号中kubectl patch serviceaccount default -p &#39;{&quot;imagePullSecrets&quot;: [{&quot;name&quot;: &quot;SECRET-NAME&quot;}]}#查看默认账号配置kubectl get serviceaccounts  default -o yaml</code></pre><blockquote><p>说明：</p><ul><li>secret名： SECRET-NAME</li><li>–docker-server 为docker login时的域名</li><li>–docker-username 是登录镜仓库的用户名</li><li>–docker-password 登录镜仓库的密码</li><li>–docker-email 邮箱账号</li></ul></blockquote>]]></content>
-      
-      <categories>
-          
-          <category> kubernetes </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> docker </tag>
-            
-            <tag> harbor </tag>
             
         </tags>
       

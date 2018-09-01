@@ -90,7 +90,7 @@
 <meta property="og:description" content="准备环境部署架构图 主机分配   num hostname role ip addr     1 etcd1 etcd 192.168.255.194   2 etcd2 etcd 192.168.255.195   3 etcd3 etcd 192.168.255.196   4 apiserver1 api srever 192.168.255.190   5 apiserver2 api s">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://kyyang.io/images/kubernetes-arch.png">
-<meta property="og:updated_time" content="2018-08-12T04:50:09.120Z">
+<meta property="og:updated_time" content="2018-09-01T13:17:49.691Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="搭建kubernetes高可用集群-01准备环境">
 <meta name="twitter:description" content="准备环境部署架构图 主机分配   num hostname role ip addr     1 etcd1 etcd 192.168.255.194   2 etcd2 etcd 192.168.255.195   3 etcd3 etcd 192.168.255.196   4 apiserver1 api srever 192.168.255.190   5 apiserver2 api s">
@@ -484,9 +484,20 @@
 <a id="more"></a>
 <h3 id="主机基本配置"><a href="#主机基本配置" class="headerlink" title="主机基本配置"></a>主机基本配置</h3><h4 id="在所有机器禁用selinux"><a href="#在所有机器禁用selinux" class="headerlink" title="在所有机器禁用selinux"></a>在所有机器禁用selinux</h4><pre><code>setenforce 0
 sed  -i &#39;s/SELINUX=enforcing/SELINUX=disabled/g&#39; /etc/selinux/config
-</code></pre><h4 id="禁用防火墙"><a href="#禁用防火墙" class="headerlink" title="禁用防火墙"></a>禁用防火墙</h4><pre><code> systemctl stop firewalld
+</code></pre><h4 id="禁用防火墙"><a href="#禁用防火墙" class="headerlink" title="禁用防火墙"></a>禁用防火墙</h4><pre><code> systemctl stop firewalld 
  systemctl disable firewalld
  systemctl satus firewalld
+</code></pre><h4 id="禁用SWAP"><a href="#禁用SWAP" class="headerlink" title="禁用SWAP"></a>禁用SWAP</h4><pre><code>swapoff -a
+
+## 修改/etc/fstab, 注释swap行，如下：
+# /etc/fstab
+# Created by anaconda on Sun Apr 22 03:04:41 2018
+# Accessible filesystems, by reference, are maintained under &#39;/dev/disk&#39;
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/mapper/centos-root  /                       xfs     defaults        0 0
+UUID=eb8db29a-d416-49e5-8811-320dba32b88e /boot  xfs     defaults        0 0
+#/dev/mapper/centos-swap swap                    swap    defaults        0 0
 </code></pre><h4 id="所有节点设置以下内核参数"><a href="#所有节点设置以下内核参数" class="headerlink" title="所有节点设置以下内核参数"></a>所有节点设置以下内核参数</h4><pre><code>cat  &gt; /etc/sysctl.d/k8s.conf &lt;&lt; EOF
 net.ipv4.ip_forward = 1
 net.bridge.bridge-nf-call-ip6tables = 1
@@ -577,8 +588,8 @@ sysctl  -p /etc/sysctl.d/k8s.conf
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/4238961614/" rel="next" title="GC垃圾回收">
-                <i class="fa fa-chevron-left"></i> GC垃圾回收
+              <a href="/posts/1685831840/" rel="next" title="k8s v1.8.13 拉取私有镜像仓库镜像失败问题处理笔记">
+                <i class="fa fa-chevron-left"></i> k8s v1.8.13 拉取私有镜像仓库镜像失败问题处理笔记
               </a>
             
           </div>
@@ -740,7 +751,7 @@ sysctl  -p /etc/sysctl.d/k8s.conf
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备环境"><span class="nav-number">1.</span> <span class="nav-text">准备环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#部署架构图"><span class="nav-number">1.1.</span> <span class="nav-text">部署架构图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主机分配"><span class="nav-number">1.2.</span> <span class="nav-text">主机分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主机基本配置"><span class="nav-number">1.3.</span> <span class="nav-text">主机基本配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在所有机器禁用selinux"><span class="nav-number">1.3.1.</span> <span class="nav-text">在所有机器禁用selinux</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#禁用防火墙"><span class="nav-number">1.3.2.</span> <span class="nav-text">禁用防火墙</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#所有节点设置以下内核参数"><span class="nav-number">1.3.3.</span> <span class="nav-text">所有节点设置以下内核参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装目录规划"><span class="nav-number">1.4.</span> <span class="nav-text">安装目录规划</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备环境"><span class="nav-number">1.</span> <span class="nav-text">准备环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#部署架构图"><span class="nav-number">1.1.</span> <span class="nav-text">部署架构图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主机分配"><span class="nav-number">1.2.</span> <span class="nav-text">主机分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主机基本配置"><span class="nav-number">1.3.</span> <span class="nav-text">主机基本配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在所有机器禁用selinux"><span class="nav-number">1.3.1.</span> <span class="nav-text">在所有机器禁用selinux</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#禁用防火墙"><span class="nav-number">1.3.2.</span> <span class="nav-text">禁用防火墙</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#禁用SWAP"><span class="nav-number">1.3.3.</span> <span class="nav-text">禁用SWAP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#所有节点设置以下内核参数"><span class="nav-number">1.3.4.</span> <span class="nav-text">所有节点设置以下内核参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装目录规划"><span class="nav-number">1.4.</span> <span class="nav-text">安装目录规划</span></a></li></ol></li></ol></div>
             
 
           </div>
